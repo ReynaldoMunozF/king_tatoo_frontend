@@ -1,0 +1,37 @@
+.adminDesign {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.userList {
+    display:flex;
+    align-items: center;
+    height: 100%;
+    width: 30em;
+    display: flex;
+    flex-direction: column;
+    background-color: beige;
+}
+
+.userRow {
+    width: 100%;
+    background-color:burlywood;
+    margin-top: 1px;
+}
+
+.userDetail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+    width: 50em;
+    background-color: grey;
+}
+
+.userDetailText {
+    font-size: 3em;
+}

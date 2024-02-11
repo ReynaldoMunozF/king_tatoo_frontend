@@ -1,0 +1,23 @@
+.miDiv {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    background-color: rgb(101, 101, 101);
+}
+
+.characterContainer {
+    
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+
+.apiCallButton {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: brown;
+}

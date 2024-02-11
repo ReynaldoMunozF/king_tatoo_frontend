@@ -1,0 +1,30 @@
+
+.login_container {
+    display:flex;
+    justify-content: center;
+    gap: 1em;
+}
+.login_container @media (max-width: 1250px) {
+    
+  }
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+.login input {
+    border-radius: 5px;
+    border: 1px solid;
+    width: 300px;
+
+}
+.apiCallButton {
+    height: 2em;
+    width: 5em;
+    border-radius: 5px;
+    background-color: rgb(186, 190, 188);
+    text-align: center;
+    
+}
