@@ -5,6 +5,11 @@
     color: rgba(208, 74, 74, 0.637)
 }
 
+h1{
+    font-size: x-large;
+    color: antiquewhite;
+}
+
 #importante {
     font-size:xx-large;
     color: orange

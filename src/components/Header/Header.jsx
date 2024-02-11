@@ -7,6 +7,7 @@ import "./Header.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, userData } from "../../pages/userSlice";
+import Logo_principal from "../../assets/img/logo_leon.png";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -19,20 +20,21 @@ export const Header = () => {
   const logMeOut = () => {
     dispatch(logout({credentials: {}}))
     setTimeout(() => {
-      navigate("/personajes");
+      navigate("/login");
     });
   };
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary" id="navbar">
+    <Navbar  data-bs-theme="dark" expand="lg" className="casa" id="navbar">
       <Container>
-        <Navbar.Brand href="">Mi fabulosa APP</Navbar.Brand>
+        <img  className= "img" src={Logo_principal} alt="soy yo" />
+        <Navbar.Brand href="/">King Tattoo</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="personajes">Personajes</Nav.Link>
-            <NavDropdown title="Mi cuenta" id="basic-nav-dropdown">
+            <NavDropdown  className="navdrop" title="Mi cuenta"  id="basic-nav-dropdown">
               {!token ? (
                 <>
                   <NavDropdown.Item href="login">Login</NavDropdown.Item>

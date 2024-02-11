@@ -13,8 +13,11 @@ export const Profile = () => {
   const userRdxData = useSelector(userData)
 
   const token = userRdxData.credentials.token
-  const myId = userRdxData.credentials.userData.id
+  const myId = userRdxData.credentials.userData.user_id
 
+ 
+  console.log(myId);
+  
   useEffect(() => {
     if (!token) {
       navigate("/register");
@@ -24,7 +27,7 @@ export const Profile = () => {
           console.log(res, "soy la respuesta del server")
           setProfileData(res);
       })
-      }, 2000);
+      }, 1000);
     }
   }, []);
 
@@ -36,7 +39,7 @@ export const Profile = () => {
   };
 
   useEffect (()=> {
-    console.log(profileData)
+    //console.log(profileData)
   }, [profileData])
 
   const buttonHandler = () => {
@@ -50,6 +53,10 @@ export const Profile = () => {
     // }
   };
 
+  
+
+  console.log(profileData[0]);
+
   useEffect(() => {
     console.log(profileData);
   }, [profileData]);
@@ -58,16 +65,13 @@ export const Profile = () => {
     <div className="profileDesign">
       
 
-      { !!profileData.email 
-      ?
-      <>
-        <h1>{profileData.createdAt}</h1>
+      
+        <h1>{profileData.first_name}</h1>
+        <h1>{profileData.last_name}</h1>
         <h1>{profileData.email}</h1>
-        <h1>{profileData.role}</h1>
-        <h1>{profileData._id}</h1>
-      </> 
-      : <p>Cargando datos de perfil...</p>
-      }
+        <h1>{profileData.phone}</h1>
+        <h1>{profileData.id}</h1>
+      
       <button onClick={() => buttonHandler()}></button>
       {isEditing 
       ? (
