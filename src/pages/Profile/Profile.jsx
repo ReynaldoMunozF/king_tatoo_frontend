@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
-import { getUserById , getAppointmentById } from "../../services/apiCalls";
+import { getUserById , getAppointmentById,getAllArtist } from "../../services/apiCalls";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { useSelector } from "react-redux";
 import { userData } from "../userSlice";
@@ -11,11 +11,12 @@ export const Profile = () => {
   const [profileData, setProfileData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [appointmentData, setAppointmentData] = useState([])
+  const [artistData, setArtistData] = useState([])
   const userRdxData = useSelector(userData);
 
   const token = userRdxData.credentials.token;
   const myId = userRdxData.credentials.userData.user_id;
-
+console.log(artistData);
   useEffect(() => {
     if (!token) {
       navigate("/register");
@@ -24,6 +25,11 @@ export const Profile = () => {
         getUserById(token, myId).then((res) => {
           console.log(res, "soy la respuesta del server");
           setProfileData(res);
+          
+        });
+        getAllArtist().then((res) => {
+          console.log(res, "soy la respuesta de los artist");
+          setArtistData(res);
         });
       }, 1000);
     }
@@ -50,10 +56,6 @@ export const Profile = () => {
     //     setIsEditing(false)
     // }
   };
-
-
-
-
   const userAppointment  = () => {
   if (!token) {
     navigate("/register");
@@ -66,12 +68,7 @@ export const Profile = () => {
   
   }
 
-//let cita = (appointmentData[0].appointment_date).format("DD-MM-YYYY")
-
-
-//console.log(cita + "soy cita");
-
-console.log(appointmentData[1].appointment_date);
+console.log(appointmentData[0]?.tattoo_artist_id);
 
 }
 

@@ -76,3 +76,8 @@ export const getAppointmentById = async (token, id) => {
     throw error;
   }
 };
+
+export const getAllArtist = async () => {
+  const res = await axios.get(`${API_URL}artist`);
+  return res.data; 
+};
