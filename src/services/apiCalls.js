@@ -5,10 +5,7 @@ const API_URL = "http://localhost:3000/api/";
 //const API_URL = "https://clinicamia.vercel.app"
 // const API_URL = "https://dummyjson.com"
 
-export const bringAllCharacters = async () => {
-  const res = await axios.get(`${API_URL}/character`);
-  return res.data.user;
-};
+
 
 export const bringAllUsers = async () => {
   const res = await axios.get(`${API_URL}/user/find`);
@@ -48,6 +45,31 @@ export const getUserById = async (token, id) => {
       },
     };
     const res = await axios.get(`${API_URL}users/${id}`, config);
+    return res.data;
+  } catch (error) {
+    console.error("Error en el login:", error);
+    throw error;
+  }
+};
+export const userRegister = async (userData) => {
+  try {
+    const res = await axios.post(`${API_URL}authUser/register`, userData, {});
+    const data = res
+    return data;
+  } catch (error) {
+    console.error("Error en la creación:", error);
+    throw error;
+  }
+};
+
+export const getAppointmentById = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const res = await axios.get(`${API_URL}users/${id}/appointments`, config);
     return res.data;
   } catch (error) {
     console.error("Error en el login:", error);
