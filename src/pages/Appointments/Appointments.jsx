@@ -8,11 +8,12 @@ import {
   getUserById,
   getAppointmentById,
   getAllArtist,
-  getScheduleByIdArtist
+  getScheduleByIdArtist,
 } from "../../services/apiCalls";
 import { ArtistCard } from "../../components/ArtistCard/ArtistCard";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import Button from "react-bootstrap/Button";
+import { BtnAppointments } from "../../components/ButtonAppointment/ButtonAppointment";
 
 export const Appointments = () => {
   //const navigate = useNavigate();
@@ -61,10 +62,8 @@ export const Appointments = () => {
   };
 
   console.log(artistSelectId + artistSelectNickname);
-  console.log(artistSchedules)
+  console.log(artistSchedules);
   //const artistSelectId = artistData[artistSelect()].nickname
-
-  let idprueba = 1;
 
   return (
     <div className="container_major">
@@ -91,11 +90,23 @@ export const Appointments = () => {
       <div className="appointment_artist_container">
         {show2 ? (
           <>
-          <ArtistCard artist={artistSelectNickname} />
-          
-            <Button variant="warning" disabled={idprueba === 0}>
+            <ArtistCard artist={artistSelectNickname} />
+
+            <Button variant="warning" disabled={false}>
               Seleccionar
             </Button>
+            
+            {artistSchedules.map((id, index) => (
+           
+           <BtnAppointments
+                key={index}
+                active={artistSchedules[index].active}
+                hour={artistSchedules[index].hour}
+                disable= {false}
+                ></BtnAppointments>
+                
+              
+            ))}
           </>
         ) : (
           // <Button variant="outline-success" disabled={idprueba === 0}>
