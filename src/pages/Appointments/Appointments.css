@@ -1,0 +1,18 @@
+.artists_container{
+
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+h1{
+  color: black;
+  
+}
+.container_major{
+  display: flex;
+  flex-direction: column;
+}
+.appointment_artist_container{
+  display: flex;
+  justify-content: center;
+}

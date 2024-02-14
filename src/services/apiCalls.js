@@ -77,7 +77,26 @@ export const getAppointmentById = async (token, id) => {
   }
 };
 
+export const updateAppointmentById = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const res = await axios.patch(`${API_URL}appointments/${id}`, config);
+    return res.data;
+  } catch (error) {
+    console.error("Error en update_Appointment:", error);
+    throw error;
+  }
+};
 export const getAllArtist = async () => {
   const res = await axios.get(`${API_URL}artist`);
   return res.data; 
+};
+
+export const getScheduleByIdArtist = async (id) => {
+  const res = await axios.get(`${API_URL}schedules/${id}`);
+  return res.data;
 };
