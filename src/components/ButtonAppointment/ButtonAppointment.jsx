@@ -2,8 +2,8 @@ import Button from 'react-bootstrap/Button';
 
 export const BtnAppointments = ({active, hour}) => {
 
-    let activeSchedule = "success"
-    let inactiveSchedule = "danger"
+    let activeSchedule = "dark"
+    let inactiveSchedule = "outline-dark"
     let disable 
     let color
     
@@ -12,7 +12,7 @@ export const BtnAppointments = ({active, hour}) => {
         disable = false
     } else {
         color = inactiveSchedule;
-        disable = false
+        disable = true
     }
 
   return (

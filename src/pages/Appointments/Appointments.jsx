@@ -14,14 +14,20 @@ import { ArtistCard } from "../../components/ArtistCard/ArtistCard";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import Button from "react-bootstrap/Button";
 import { BtnAppointments } from "../../components/ButtonAppointment/ButtonAppointment";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import es from "date-fns/locale/es";
+import moment from "moment";
+import "moment/locale/pt-br";
 
 export const Appointments = () => {
+  registerLocale("es", es);
   //const navigate = useNavigate();
   const [profileData, setProfileData] = useState({});
   const [artistData, setArtistData] = useState([]);
   const [artistSelectId, setArtistSelectId] = useState(0);
   const [artistSelectNickname, setArtistSelectNickname] = useState("");
   const [artistSchedules, setArtistSchedule] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
 
   const userRdxData = useSelector(userData);
 
@@ -61,9 +67,41 @@ export const Appointments = () => {
     setShow2(true);
   };
 
-  console.log(artistSelectId + artistSelectNickname);
-  console.log(artistSchedules);
+  const selectSchedulesDate = () => {
+    console.log("entro aqui");
+    const dateSchedule2 = [];
+    
+    for (let index = 0; index < artistSchedules.length; index++) {
+      const dateShedule = moment(
+        artistSchedules[index].appointment_date
+      ).format("DD-MM-YYYY");
+
+      const dateSelection = moment(startDate).format("DD-MM-YYYY");
+
+      if (dateShedule == dateSelection) {
+        const dateSchedule = {
+          hour : artistSchedules[index].hour,
+          active : artistSchedules[index].active
+        }
+        dateSchedule2.push(dateSchedule);
+        console.log(dateSchedule);
+        
+      }
+
+    }
+    return dateSchedule2 ;
+    //console.log(dateShedule);
+
+  };
+
+ const datefinal = (selectSchedulesDate());
+ //console.log(datefinal[1].active);
+
+  // console.log(artistSelectId + artistSelectNickname);
+  // console.log(artistSchedules);
   //const artistSelectId = artistData[artistSelect()].nickname
+
+  console.log(startDate);
 
   return (
     <div className="container_major">
@@ -79,6 +117,8 @@ export const Appointments = () => {
               selectArtist={() =>
                 artistSelect(artistData[index].id, artistData[index].nickname)
               }
+              nombre={"Seleccionar"}
+              BtnColor={"outline-dark"}
             ></ArtistCard>
             //date={appointmentData[index].appointment_date}
           ))
@@ -90,23 +130,32 @@ export const Appointments = () => {
       <div className="appointment_artist_container">
         {show2 ? (
           <>
-            <ArtistCard artist={artistSelectNickname} />
-
-            <Button variant="warning" disabled={false}>
-              Seleccionar
-            </Button>
-            
-            {artistSchedules.map((id, index) => (
-           
-           <BtnAppointments
-                key={index}
-                active={artistSchedules[index].active}
-                hour={artistSchedules[index].hour}
-                disable= {false}
-                ></BtnAppointments>
-                
+            <DatePicker
+              locale="es"
+              let
               
-            ))}
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+            ></DatePicker>
+            <ArtistCard
+              artist={artistSelectNickname}
+              nombre={"Citas Disponibles"}
+              BtnColor={"outline-dark"}
+              selectArtist={() => selectSchedulesDate()}
+            />
+
+            <div className="datePicke_container"></div>
+
+            <div className="shedule_conatiner">
+              {datefinal.map((id, index) => (
+                <BtnAppointments
+                  key={index}
+                  active={datefinal[index].active}
+                  hour={datefinal[index].hour}
+                  disable={false}
+                ></BtnAppointments>
+              ))}
+            </div>
           </>
         ) : (
           // <Button variant="outline-success" disabled={idprueba === 0}>
