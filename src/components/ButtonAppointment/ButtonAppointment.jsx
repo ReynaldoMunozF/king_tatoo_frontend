@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 
-export const BtnAppointments = ({active, hour}) => {
+export const BtnAppointments = ({active, hour , createDataAppointment}) => {
 
     let activeSchedule = "dark"
     let inactiveSchedule = "outline-dark"
@@ -18,7 +18,7 @@ export const BtnAppointments = ({active, hour}) => {
   return (
     <>
       
-      <Button variant={color} disabled={disable}>{hour}</Button>{' '}
+      <Button variant={color} disabled={disable} onClick={createDataAppointment}>{hour} </Button>{' '}
       
     </>
   );

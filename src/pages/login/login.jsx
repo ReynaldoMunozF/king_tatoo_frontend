@@ -36,7 +36,7 @@ export const Login = () => {
     if (credentials.email == "" || credentials.password == "") {
       return setShow(true);
     }
-    console.log(credentials);
+    //console.log(credentials);
     userLogin(credentials)
       .then((token) => {
         if (!token) {
@@ -63,12 +63,14 @@ export const Login = () => {
      
       <div className="login">
         <CustomInput
+          autoFocus 
           placeholder={"Ingresa tu email"}
           type={"email"}
           name={"email"}
           handler={inputHandler}
         ></CustomInput>
         <CustomInput
+       
           placeholder={"Ingresa tu contraseña"}
           type={"password"}
           name={"password"}

@@ -18,10 +18,10 @@ export const Header = () => {
   const decoded = userRdxData.credentials.userData
 
   const logMeOut = () => {
-    dispatch(logout({credentials: {}}))
+    dispatch(logout({credentials:{}}))
     setTimeout(() => {
       navigate("/login");
-    });
+    },1000);
   };
 
   return (

@@ -41,6 +41,6 @@ export const userSlice = createSlice({
 export const { login, logout } = userSlice.actions;
 
 // este const es el nombre de la sección del almacén a la que tendré que ir,
-// const userRdxDetail = useSelector(userDetailId)
+//const userRdxDetail = useSelector(userDetailId)
 export const userData = (state) => state.user;
 export default userSlice.reducer;

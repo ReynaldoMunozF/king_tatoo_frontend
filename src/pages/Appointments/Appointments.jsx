@@ -6,9 +6,10 @@ import { userData } from "../userSlice";
 import "./Appointments.css";
 import {
   getUserById,
-  getAppointmentById,
   getAllArtist,
   getScheduleByIdArtist,
+  createAppointmentById,
+  updateScheduleById,
 } from "../../services/apiCalls";
 import { ArtistCard } from "../../components/ArtistCard/ArtistCard";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
@@ -18,25 +19,36 @@ import { registerLocale, setDefaultLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import moment from "moment";
 import "moment/locale/pt-br";
+import { useNavigate } from "react-router-dom";
+import { ModalAppointment } from "../../components/Modal/Modal";
 
 export const Appointments = () => {
   registerLocale("es", es);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({});
   const [artistData, setArtistData] = useState([]);
   const [artistSelectId, setArtistSelectId] = useState(0);
   const [artistSelectNickname, setArtistSelectNickname] = useState("");
   const [artistSchedules, setArtistSchedule] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
+  const [appointmentData, setappointmentData] = useState({
+    user_id: 0,
+    tattoo_artist_id: 0,
+    appointment_date: "",
+    hour: "",
+  });
+  const [scheduleId, setScheduleId] = useState(0);
 
   const userRdxData = useSelector(userData);
 
   const token = userRdxData.credentials.token;
-  const myId = userRdxData.credentials.userData.user_id;
+  const myId = userRdxData.credentials.userData?.user_id;
+
   //console.log(artistData);
   //console.log(appointmentData[0].tattoo_artist_id);
   const [show, setShow] = useState(true);
   const [show2, setShow2] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (!token) {
@@ -66,11 +78,12 @@ export const Appointments = () => {
     setShow(false);
     setShow2(true);
   };
+  console.log(artistSchedules);
 
   const selectSchedulesDate = () => {
     console.log("entro aqui");
     const dateSchedule2 = [];
-    
+
     for (let index = 0; index < artistSchedules.length; index++) {
       const dateShedule = moment(
         artistSchedules[index].appointment_date
@@ -80,29 +93,53 @@ export const Appointments = () => {
 
       if (dateShedule == dateSelection) {
         const dateSchedule = {
-          hour : artistSchedules[index].hour,
-          active : artistSchedules[index].active
-        }
+          id: artistSchedules[index].id,
+          hour: artistSchedules[index].hour,
+          active: artistSchedules[index].active,
+        };
         dateSchedule2.push(dateSchedule);
         console.log(dateSchedule);
-        
       }
-
     }
-    return dateSchedule2 ;
-    //console.log(dateShedule);
-
+    return dateSchedule2;
   };
 
- const datefinal = (selectSchedulesDate());
- //console.log(datefinal[1].active);
+  const datefinal = selectSchedulesDate();
 
-  // console.log(artistSelectId + artistSelectNickname);
-  // console.log(artistSchedules);
-  //const artistSelectId = artistData[artistSelect()].nickname
-
+  console.log(datefinal);
   console.log(startDate);
 
+  const createDataAppointment = (hourArtist, selectScheduleId) => {
+    setShowModal(true);
+    setScheduleId(selectScheduleId);
+    setappointmentData((prevState) => ({
+      ...prevState,
+
+      user_id: parseInt(myId),
+      tattoo_artist_id: artistSelectId,
+      appointment_date: moment(startDate).format("YYYY-MM-DD"),
+      hour: hourArtist,
+    }));
+  };
+  console.log(scheduleId + "soy el schedule");
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  console.log(appointmentData);
+
+  const createAppointment = () => {
+    createAppointmentById(token, appointmentData);
+    const updateActive = {
+      active: 0,
+    };
+    updateScheduleById(scheduleId, updateActive);
+
+    setShowModal(false)
+    navigate("/profile")
+
+  };
   return (
     <div className="container_major">
       <div className="titulo">
@@ -133,15 +170,14 @@ export const Appointments = () => {
             <DatePicker
               locale="es"
               let
-              
               selected={startDate}
               onChange={(date) => setStartDate(date)}
             ></DatePicker>
             <ArtistCard
               artist={artistSelectNickname}
-              nombre={"Citas Disponibles"}
+              nombre={"Cambiar Artista"}
               BtnColor={"outline-dark"}
-              selectArtist={() => selectSchedulesDate()}
+              selectArtist={() => navigate("/appointments")}
             />
 
             <div className="datePicke_container"></div>
@@ -153,17 +189,32 @@ export const Appointments = () => {
                   active={datefinal[index].active}
                   hour={datefinal[index].hour}
                   disable={false}
+                  createDataAppointment={() =>
+                    createDataAppointment(
+                      datefinal[index].hour,
+                      datefinal[index].id
+                    )
+                  }
                 ></BtnAppointments>
               ))}
             </div>
           </>
         ) : (
-          // <Button variant="outline-success" disabled={idprueba === 0}>
-          //   Success
-          // </Button>{" "}
-          // <Button variant="outline-danger" disabled={idprueba === 1}>
-          //   Danger
-          // </Button>{" "}
+          <div />
+        )}
+      </div>
+      <div className="modal_container">
+        {showModal ? (
+          <>
+            <ModalAppointment
+              Title={"CONFIRMA TU CITA"}
+              date={moment(startDate).format("DD-MM-YYYY")}
+              hour={appointmentData.hour}
+              closeModal={() => closeModal()}
+              createAppointmentById={() => createAppointment()}
+            />
+          </>
+        ) : (
           <div />
         )}
       </div>
