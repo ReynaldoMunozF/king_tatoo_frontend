@@ -22,6 +22,7 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Tables } from "../../components/Tables/Tables";
 import Table from "react-bootstrap/Table";
+import edit_button from "../../assets/img/edit_button.png";
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -71,9 +72,9 @@ export const Profile = () => {
     console.log(profileDataUpdate);
   };
 
-  // useEffect(() => {
+   useEffect(() => {
   //   //console.log(profileData)
-  // }, [profileData]);
+   }, [profileDataUpdate]);
 
   const buttonHandler = () => {
     setIsEditing(!isEditing);
@@ -102,47 +103,101 @@ export const Profile = () => {
 
   const updateUser = () => {
     console.log(profileDataUpdate.first_name);
+    if (profileDataUpdate.first_name == "") {
+      profileDataUpdate.first_name = profileData.first_name;
+    }
+     if (profileDataUpdate.last_name == "") {
+      profileDataUpdate.last_name = profileData.last_name;
+    }
+     if (profileDataUpdate.birthday == "") {
+      profileDataUpdate.birthday = profileData.birthday;
+    }
+     if (profileDataUpdate.email == "") {
+      profileDataUpdate.email = profileData.email;
+    }
 
     updateUserById(token, myId, profileDataUpdate);
+    setIsEditing(false);
+    //window.location.replace("");
   };
 
   return (
     <div className="profileDesign">
       <div className="profileData_container">
-        <Card style={{ width: "20rem" }}>
+        <Card style={{ width: "26rem" }}>
           <ListGroup variant="flush">
             <ListGroup.Item variant="secondary" active>
-              <strong>PERFIL</strong>
+              <strong>PERFIL</strong>{" "}
+              {
+                !isEditing?<img
+                  src={edit_button}
+                  alt="edit"
+                  onClick={() => buttonHandler()}
+                />:null
+              }
             </ListGroup.Item>
             <ListGroup.Item>
-              <strong>Nonbre: </strong>  <CustomInput
-                  placeholder={profileData.first_name}
-                  value={profileData.first_name}
-                  statusDisabled={!isEditing}
-                  name="first_name"
-                  type="text"
-                  handler={inputHandler}
-                  ></CustomInput>
-                  <button onClick={()=> buttonHandler()}>a</button>
+              <strong>Nonbre: </strong>{" "}
+              <CustomInput
+                placeholder={profileData.first_name}
+                value={profileData.first_name}
+                statusDisabled={!isEditing}
+                statusFocus={!isEditing}
+                name="first_name"
+                type="text"
+                handler={inputHandler}
+              ></CustomInput>
+              {/* <img src= {edit_button} alt="edit" onClick={()=> buttonHandler()} /> */}
             </ListGroup.Item>
             <ListGroup.Item>
-              <strong>Apellidos:</strong> {profileData.last_name}
+              <strong>Apellidos:</strong>{" "}
+              <CustomInput
+                placeholder={profileData.last_name}
+                statusDisabled={!isEditing}
+                statusFocus={!isEditing}
+                name="last_name"
+                type="text"
+                handler={inputHandler}
+              ></CustomInput>
             </ListGroup.Item>
             <ListGroup.Item>
               <strong>Teléfono:</strong> {profileData.phone}
             </ListGroup.Item>
             <ListGroup.Item>
-              <strong>Fecha Nacimiento:</strong>{" "}
-              {moment(profileData.birthday).format("DD-MM-YYYY")}
+              <strong>Fecha Nacimiento:</strong>
+              <CustomInput
+                placeholder={moment(profileData.birthday).format(
+                  "DD-MM-YYYY"
+                )}
+                statusDisabled={!isEditing}
+                statusFocus={!isEditing}
+                name="birthday"
+                type={isEditing ?"date": "text"}
+                handler={inputHandler}
+              ></CustomInput>
             </ListGroup.Item>
             <ListGroup.Item>
               {" "}
-              <strong>Email: </strong> {profileData.email}
+              <strong>Email: </strong>{" "}
+              <CustomInput
+                placeholder={profileData.email}
+                statusDisabled={!isEditing}
+                statusFocus={!isEditing}
+                name="email"
+                type="email"
+                handler={inputHandler}
+              ></CustomInput>
             </ListGroup.Item>
+            {isEditing ? (
+              <ListGroup.Item className="d-flex justify-content-end align-items-start">
+                <Button variant="outline-success" onClick={() => updateUser()}>
+                  Guardar
+                </Button>
+                <Button variant="outline-danger">Anular</Button>
+              </ListGroup.Item>
+            ) : null}
           </ListGroup>
         </Card>
-
-        <button onClick={() => buttonHandler()}>EDITAR PERFIL</button>
 
         <Button
           className="modificar"
@@ -152,74 +207,6 @@ export const Profile = () => {
         >
           MIS CITAS
         </Button>
-        {isEditing ? (
-          <Card style={{ width: "20rem" }}>
-            <ListGroup variant="flush">
-              <ListGroup.Item variant="secondary" active>
-                <strong>PERFIL</strong>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <strong>Nonbre: </strong>
-                <CustomInput
-                  placeholder={profileData.first_name}
-                  name="first_name"
-                  type="text"
-                  handler={inputHandler}
-                ></CustomInput>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <strong>Apellidos:</strong>{" "}
-                <CustomInput
-                  placeholder={profileData.last_name}
-                  name="last_name"
-                  type="text"
-                  handler={inputHandler}
-                ></CustomInput>
-              </ListGroup.Item>
-              {/* <ListGroup.Item>
-                <strong>Teléfono:</strong>{" "}
-                <CustomInput
-                  placeholder={profileData.last_name}
-                  name="phone"
-                  type="text"
-                  handler={inputHandler}
-                ></CustomInput>
-              </ListGroup.Item> */}
-              <ListGroup.Item>
-                <strong>Fecha Nacimiento:</strong>{" "}
-                <CustomInput
-                  placeholder={profileData.last_name}
-                  name="birthday"
-                  type="date"
-                  handler={inputHandler}
-                ></CustomInput>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {" "}
-                <strong>Email: </strong>{" "}
-                <CustomInput
-                  placeholder={profileData.last_name}
-                  name="email"
-                  type="email"
-                  handler={inputHandler}
-                ></CustomInput>
-              </ListGroup.Item>
-              <button onClick={() => updateUser()}>ENVIAR</button>
-            </ListGroup>
-          </Card>
-        ) : // <ListGroup.Item variant="secondary" active>
-        //   <CustomInput
-        //     name="firstName"
-        //     type="text"
-        //     handler={inputHandler}
-        //   ></CustomInput>
-        //   <CustomInput
-        //     name="firstName"
-        //     type="text"
-        //     handler={inputHandler}
-        //   ></CustomInput>
-        // </ListGroup.Item>
-        null}
       </div>
 
       {/* <---------------------------------------------------------------- */}

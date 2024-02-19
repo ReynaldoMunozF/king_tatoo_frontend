@@ -10,7 +10,7 @@
 .profileData_container{
 
 display: flex;
-
+flex-direction: column;
 flex-wrap: wrap;
 justify-content: center;
 align-items: center;
@@ -41,5 +41,21 @@ gap: 4em;
   justify-content: center;
   align-items: center;
   width: 25rem;
+
+}
+
+.profileData_container input{
+width: 15em;
+ border-color: transparent transparent transparent;
+ background-color: transparent ;
+}
+.profileData_container img{
+
+  color: azure;
+  width: 1.5em;
+}
+.profileData_container button{
+
+ margin: 0.2em;
 
 }
