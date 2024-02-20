@@ -5,7 +5,6 @@ import { CharacterDetail } from "../CharacterDetail/CharacterDetail"
 import { Profile } from "../Profile/Profile"
 import { Admin } from "../Admin/Admin"
 import { Login } from "../login/login"
-import { Login2 } from "../login2/login2"
 import { Appointments } from "../Appointments/Appointments"
 
 export const Body = () => {

@@ -1,21 +1,45 @@
-.artists_container{
-
+.container_major {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+.artists_container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  text-align: center;
   gap: 1em;
+  width:100%;
+ 
 }
-h1{
-  color: black;
+
+.artists_container button {
+  width: 6em;
   
 }
-.container_major{
+.card {
+border-radius: 20px;
+  box-shadow: 2px 2px 6px black;
+}
+
+.card button{
+  width: 6em;
+}
+
+.card img{
+  border-radius: 20px;
+  
+}
+.card-body{
   display: flex;
   flex-direction: column;
 }
-.appointment_artist_container{
+h1 {
+  color: black;
+}
+.appointment_artist_container {
   display: flex;
-  
+
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -23,11 +47,16 @@ h1{
 }
 .shedule_conatiner {
   display: flex;
-  
-  justify-content:space-around;
+  width: 20em;
+  justify-content: space-around;
   gap: 1em;
 }
-.titulo{
+.titulo {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 3em;
 }

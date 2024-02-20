@@ -1,12 +1,12 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-export const ArtistCard = ({ artist, selectArtist, nombre ,BtnColor}) => {
+export const ArtistCard = ({ artist, selectArtist, nombre ,BtnColor,photo}) => {
   return (
-    <Card style={{ width: "15rem" }}>
+    <Card style={{ width: "20rem" }}>
       <Card.Img
         variant="top"
-        src='https://anarchy16tattoo.com/wp-content/uploads/2023/03/Dymon-Tattoo.jpg'
+        src={photo}
       />
       <Card.Body>
         <Card.Title>{artist}</Card.Title>

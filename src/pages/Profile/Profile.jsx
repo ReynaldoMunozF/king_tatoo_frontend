@@ -12,6 +12,8 @@ import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { useSelector } from "react-redux";
 import { userData } from "../userSlice";
 import Button from "react-bootstrap/Button";
+import Carousel from "react-bootstrap/Carousel";
+
 import { AppointmentCard } from "../../components/appointmentFormat/AppointmentFormat";
 import moment from "moment";
 import "moment/locale/pt-br";
@@ -23,6 +25,13 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { Tables } from "../../components/Tables/Tables";
 import Table from "react-bootstrap/Table";
 import edit_button from "../../assets/img/edit_button.png";
+import promo_1 from "../../assets/img/promo_1.jpg";
+import promo_2 from "../../assets/img/promo_2.jpg";
+import promo_3 from "../../assets/img/promo_3.jpg";
+import icono_cita from "../../assets/img/icono_cita.png";
+import icono_equipo from "../../assets/img/icono_equipo.png";
+import icono_contacto from "../../assets/img/icono_contacto.png";
+import icono_mis_citas from "../../assets/img/icono_miscitas.png";
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -31,6 +40,7 @@ export const Profile = () => {
     first_name: "",
     last_name: "",
     email: "",
+    phone: "",
     birthday: "",
   });
   const [isEditing, setIsEditing] = useState(false);
@@ -72,9 +82,9 @@ export const Profile = () => {
     console.log(profileDataUpdate);
   };
 
-   useEffect(() => {
-  //   //console.log(profileData)
-   }, [profileDataUpdate]);
+  useEffect(() => {
+    //   //console.log(profileData)
+  }, [profileDataUpdate]);
 
   const buttonHandler = () => {
     setIsEditing(!isEditing);
@@ -106,13 +116,13 @@ export const Profile = () => {
     if (profileDataUpdate.first_name == "") {
       profileDataUpdate.first_name = profileData.first_name;
     }
-     if (profileDataUpdate.last_name == "") {
+    if (profileDataUpdate.last_name == "") {
       profileDataUpdate.last_name = profileData.last_name;
     }
-     if (profileDataUpdate.birthday == "") {
+    if (profileDataUpdate.birthday == "") {
       profileDataUpdate.birthday = profileData.birthday;
     }
-     if (profileDataUpdate.email == "") {
+    if (profileDataUpdate.email == "") {
       profileDataUpdate.email = profileData.email;
     }
 
@@ -128,13 +138,13 @@ export const Profile = () => {
           <ListGroup variant="flush">
             <ListGroup.Item variant="secondary" active>
               <strong>PERFIL</strong>{" "}
-              {
-                !isEditing?<img
+              {!isEditing ? (
+                <img
                   src={edit_button}
                   alt="edit"
                   onClick={() => buttonHandler()}
-                />:null
-              }
+                />
+              ) : null}
             </ListGroup.Item>
             <ListGroup.Item>
               <strong>Nonbre: </strong>{" "}
@@ -150,7 +160,7 @@ export const Profile = () => {
               {/* <img src= {edit_button} alt="edit" onClick={()=> buttonHandler()} /> */}
             </ListGroup.Item>
             <ListGroup.Item>
-              <strong>Apellidos:</strong>{" "}
+              <strong>Apellidos:</strong>
               <CustomInput
                 placeholder={profileData.last_name}
                 statusDisabled={!isEditing}
@@ -161,18 +171,28 @@ export const Profile = () => {
               ></CustomInput>
             </ListGroup.Item>
             <ListGroup.Item>
-              <strong>Teléfono:</strong> {profileData.phone}
+              <strong>Teléfono:</strong>{" "}
+              <CustomInput
+                placeholder={profileData.phone}
+                statusDisabled={!isEditing}
+                statusFocus={!isEditing}
+                name="phone"
+                type="text"
+                handler={inputHandler}
+              ></CustomInput>
             </ListGroup.Item>
             <ListGroup.Item>
               <strong>Fecha Nacimiento:</strong>
               <CustomInput
-                placeholder={moment(profileData.birthday).format(
-                  "DD-MM-YYYY"
-                )}
+                placeholder={
+                  !profileData.birthday == ""
+                    ? moment(profileData.birthday).format("DD-MM-YYYY")
+                    : ""
+                }
                 statusDisabled={!isEditing}
                 statusFocus={!isEditing}
                 name="birthday"
-                type={isEditing ?"date": "text"}
+                type={isEditing ? "date" : "text"}
                 handler={inputHandler}
               ></CustomInput>
             </ListGroup.Item>
@@ -193,35 +213,22 @@ export const Profile = () => {
                 <Button variant="outline-success" onClick={() => updateUser()}>
                   Guardar
                 </Button>
-                <Button variant="outline-danger">Anular</Button>
+                <Button variant="outline-danger" onClick={() => buttonHandler()} >Anular</Button>
               </ListGroup.Item>
             ) : null}
           </ListGroup>
         </Card>
+        <div className="icons_container">
+              <div className="icon"><img src={icono_mis_citas} alt="" onClick={() => userAppointment()} /></div>
+              <div className="icon"><img src={icono_cita} alt="" onClick={() => navigate("/appointments")}/></div>
+              <div className="icon"><img src={icono_equipo} alt="" /></div>
+              <div className="icon"><img src={icono_contacto} alt="" /></div>
+              
 
-        <Button
-          className="modificar"
-          variant="warning"
-          size="sm"
-          onClick={() => userAppointment()}
-        >
-          MIS CITAS
-        </Button>
-      </div>
-
-      {/* <---------------------------------------------------------------- */}
-
-      <div className="table_container">
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Artista</th>
-              <th>Fecha</th>
-              <th>Hora</th>
-              <th>Opciones</th>
-            </tr>
-          </thead>
-        </Table>
+        </div> 
+        <div className="btn_conatiner">
+        
+          <div className="table_container">
         {appointmentData.map((id, index) => (
           <Tables
             key={index}
@@ -233,6 +240,27 @@ export const Profile = () => {
           />
         ))}
       </div>
+          <div className="imgBtn">
+            {/* <Image src={img_register} rounded /> */}
+            <Carousel >
+              <Carousel.Item>
+                <img src={promo_1} alt="" />
+              </Carousel.Item>
+              <Carousel.Item>
+                <img src={promo_2} alt="" />
+              </Carousel.Item>
+              <Carousel.Item>
+                <img src={promo_3} alt="" />
+              </Carousel.Item>
+            </Carousel>
+          </div>
+          
+        </div>
+      </div>
+
+      {/* <---------------------------------------------------------------- */}
+
+   
 
       {show ? (
         <Alert

@@ -21,6 +21,12 @@ import moment from "moment";
 import "moment/locale/pt-br";
 import { useNavigate } from "react-router-dom";
 import { ModalAppointment } from "../../components/Modal/Modal";
+import artist_1 from "../../assets/img/artista_1.jpg";
+import artist_2 from "../../assets/img/artista_2.jpg";
+import artist_3 from "../../assets/img/artista_3.jpg";
+import artist_4 from "../../assets/img/artista_4.jpg";
+import artist_5 from "../../assets/img/artista_5.jpg";
+import artist_6 from "../../assets/img/artista_6.jpg";
 
 export const Appointments = () => {
   registerLocale("es", es);
@@ -38,17 +44,18 @@ export const Appointments = () => {
     hour: "",
   });
   const [scheduleId, setScheduleId] = useState(0);
+  const [show, setShow] = useState(true);
+  const [show2, setShow2] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const[photo, setPhoto] = useState()
 
   const userRdxData = useSelector(userData);
 
   const token = userRdxData.credentials.token;
   const myId = userRdxData.credentials.userData?.user_id;
 
-  //console.log(artistData);
-  //console.log(appointmentData[0].tattoo_artist_id);
-  const [show, setShow] = useState(true);
-  const [show2, setShow2] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+
+  const artist_photo = [artist_1, artist_2, artist_3, artist_4, artist_5, artist_6]
 
   useEffect(() => {
     if (!token) {
@@ -67,10 +74,11 @@ export const Appointments = () => {
     }
   }, []);
 
-  const artistSelect = (artistSelectId, artistSelectNickname) => {
+  const artistSelect = (artistSelectId, artistSelectNickname, artistPhoto) => {
     console.log(artistSelectId + artistSelectNickname);
     setArtistSelectId(artistSelectId);
     setArtistSelectNickname(artistSelectNickname);
+    setPhoto(artistPhoto);
     getScheduleByIdArtist(artistSelectId).then((res) => {
       console.log(res, "soy la respuesta de las citas de artist");
       setArtistSchedule(res);
@@ -136,23 +144,38 @@ export const Appointments = () => {
     };
     updateScheduleById(scheduleId, updateActive);
 
-    setShowModal(false)
-    navigate("/profile")
-
+    setShowModal(false);
+    navigate("/profile");
   };
   return (
     <div className="container_major">
+     
       <div className="titulo">
-        <h1>SELECCIONA AL ARTISTA</h1>
+      {show ? (
+          <>
+            <h1>
+          <strong>ARTISTAS</strong>
+        </h1>
+        <p>
+          Nuestro equipo está compuesto por varios artistas especializados cada
+          uno en diversos estilos, entre ellos podemos destacar el Realismo,
+          Anime, Japonés y Blackwork.
+        </p>
+          </>
+        ) : (
+          <div />
+        )}
+       
       </div>
       <div className="artists_container">
         {show ? (
           artistData.map((id, index) => (
             <ArtistCard
+            photo={artist_photo[index]}
               key={index}
               artist={artistData[index].nickname}
               selectArtist={() =>
-                artistSelect(artistData[index].id, artistData[index].nickname)
+                artistSelect(artistData[index].id, artistData[index].nickname, artist_photo[index])
               }
               nombre={"Seleccionar"}
               BtnColor={"outline-dark"}
@@ -167,17 +190,20 @@ export const Appointments = () => {
       <div className="appointment_artist_container">
         {show2 ? (
           <>
+            <h3>Selecciona la Fecha:</h3>
             <DatePicker
               locale="es"
               let
               selected={startDate}
               onChange={(date) => setStartDate(date)}
             ></DatePicker>
+            
             <ArtistCard
+            photo={photo}
               artist={artistSelectNickname}
-              nombre={"Cambiar Artista"}
+              nombre={"Cambiar"}
               BtnColor={"outline-dark"}
-              selectArtist={() => navigate("/appointments")}
+              selectArtist={()=>navigate("/appointments")}
             />
 
             <div className="datePicke_container"></div>
