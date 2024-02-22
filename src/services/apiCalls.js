@@ -156,3 +156,46 @@ export const updateScheduleById = async (id,updateActive) => {
   }
 };
 
+// <--------------------------------------------------------------------------------------------
+
+export const artistLogin = async (credentials) => {
+  try {
+    const res = await axios.post(`${API_URL}authArtist/login`, credentials, {});
+    const token = res.data.token;
+    return token;
+  } catch (error) {
+    console.error("Error en el login:", error);
+    throw error;
+  }
+};
+export const getArtistById = async (token, id) => {
+  console.log(token);
+  console.log(id);
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const res = await axios.get(`${API_URL}artist/${id}`, config);
+    return res.data;
+  } catch (error) {
+    console.error("Error en el login:", error);
+    throw error;
+  }
+};
+
+export const getAppointmentByArtistId = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const res = await axios.get(`${API_URL}artist/${id}/appointments`, config);
+    return res.data;
+  } catch (error) {
+    console.error("Error en el login:", error);
+    throw error;
+  }
+};
