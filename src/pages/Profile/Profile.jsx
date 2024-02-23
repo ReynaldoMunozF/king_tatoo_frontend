@@ -48,6 +48,7 @@ export const Profile = () => {
   const [artistData, setArtistData] = useState([]);
   const userRdxData = useSelector(userData);
   const [startDate, setStartDate] = useState(new Date());
+  const [isAppointment, setisAppointment] = useState(false);
 
   const token = userRdxData.credentials.token;
   const myId = userRdxData.credentials.userData?.user_id;
@@ -62,11 +63,11 @@ export const Profile = () => {
     } else {
       setTimeout(() => {
         getUserById(token, myId).then((res) => {
-          //console.log(res, "soy la respuesta del server");
+          console.log(res, "soy la respuesta del server");
           setProfileData(res);
         });
         getAllArtist().then((res) => {
-          //console.log(res, "soy la respuesta de los artist");
+          console.log(res, "soy la respuesta de los artist");
           setArtistData(res);
         });
       }, 1000);
@@ -105,11 +106,13 @@ export const Profile = () => {
     //console.log(appointmentData[0]?.appointment_date);
   };
 
-  const visible = (id_appointment) => {
-    setShow(true);
-    const idAppointment = id_appointment;
-    console.log(idAppointment + "soy el id de la cita");
-  };
+  const isAppointmnetStatus = () =>{
+
+    isAppointment ? setisAppointment(false) : setisAppointment(true);
+
+
+
+  }
 
   const updateUser = () => {
     console.log(profileDataUpdate.first_name);
@@ -213,36 +216,83 @@ export const Profile = () => {
                 <Button variant="outline-success" onClick={() => updateUser()}>
                   Guardar
                 </Button>
-                <Button variant="outline-danger" onClick={() => buttonHandler()} >Anular</Button>
+                <Button
+                  variant="outline-danger"
+                  onClick={() => buttonHandler()}
+                >
+                  Anular
+                </Button>
               </ListGroup.Item>
             ) : null}
           </ListGroup>
         </Card>
         <div className="icons_container">
-              <div className="icon"><img src={icono_mis_citas} alt="" onClick={() => userAppointment()} /></div>
-              <div className="icon"><img src={icono_cita} alt="" onClick={() => navigate("/appointments")}/></div>
-              <div className="icon"><img src={icono_equipo} alt="" /></div>
-              <div className="icon"><img src={icono_contacto} alt="" /></div>
-              
+          <div className="icon">
+            <img
+              src={icono_mis_citas}
+              alt=""
+              onClick={() => (userAppointment(),isAppointmnetStatus())}
+            />
+          </div>
+          <div className="icon">
+            <img
+              src={icono_cita}
+              alt=""
+              onClick={() => navigate("/appointments")}
+            />
+          </div>
+          <div className="icon">
+            <img src={icono_equipo} alt="" />
+          </div>
+          <div className="icon">
+            <img src={icono_contacto} alt="" />
+          </div>
+        </div>
 
-        </div> 
+        <div className="table_container">
+          {isAppointment ? (
+            <Table striped bordered hover variant="dark">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Artista</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                </tr>
+              </thead>
+              <tbody>
+                {appointmentData.map((id, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{artistData[index]?.nickname}</td>
+                    <td>
+                      {moment(appointmentData[index].appointment_date).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </td>
+                    <td>{appointmentData[index].hour}</td>
+                   
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : null}
+
+          {/* {appointmentData.map((id, index) => (
+            <Tables
+              key={index}
+              artist={artistData[index]?.nickname}
+              date={moment(appointmentData[index].appointment_date).format(
+                "DD-MM-YYYY"
+              )}
+              hour={appointmentData[index].hour}
+            />
+          ))} */}
+        </div>
         <div className="btn_conatiner">
-        
-          <div className="table_container">
-        {appointmentData.map((id, index) => (
-          <Tables
-            key={index}
-            artist={artistData[index]?.nickname}
-            date={moment(appointmentData[index].appointment_date).format(
-              "DD-MM-YYYY"
-            )}
-            hour={appointmentData[index].hour}
-          />
-        ))}
-      </div>
           <div className="imgBtn">
             {/* <Image src={img_register} rounded /> */}
-            <Carousel >
+            <Carousel>
               <Carousel.Item>
                 <img src={promo_1} alt="" />
               </Carousel.Item>
@@ -254,13 +304,10 @@ export const Profile = () => {
               </Carousel.Item>
             </Carousel>
           </div>
-          
         </div>
       </div>
 
       {/* <---------------------------------------------------------------- */}
-
-   
 
       {show ? (
         <Alert

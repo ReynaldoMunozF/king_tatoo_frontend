@@ -199,3 +199,22 @@ export const getAppointmentByArtistId = async (token, id) => {
     throw error;
   }
 };
+
+
+export const updateArtistById = async ( token, id, artistData) => {
+  console.log(artistData );
+
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+   console.log(config)
+    const res = await axios.patch(`${API_URL}artist/${id}`,artistData,config);
+    return res
+  } catch (error) {
+    console.error("Error en update_Artist:", );
+    throw error;
+  }
+};
