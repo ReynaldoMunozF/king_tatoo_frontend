@@ -57,6 +57,10 @@ export const Appointments = () => {
 
   const artist_photo = [artist_1, artist_2, artist_3, artist_4, artist_5, artist_6]
 
+  const isWeekday = date => {
+    const day = getDay(date);
+    return day !== 0 && day !== 6;
+  };
   useEffect(() => {
     if (!token) {
       navigate("/register");
@@ -191,10 +195,16 @@ export const Appointments = () => {
         {show2 ? (
           <>
             <h3>Selecciona la Fecha:</h3>
+            
             <DatePicker
               locale="es"
               let
               selected={startDate}
+              dateFormat={"dd/MM/YYYY"}
+              minDate={startDate}
+              filterDate={date => date.getDay()!=0 && date.getDay()!=6 }
+              showIcon
+             
               onChange={(date) => setStartDate(date)}
             ></DatePicker>
             
@@ -203,7 +213,7 @@ export const Appointments = () => {
               artist={artistSelectNickname}
               nombre={"Cambiar"}
               BtnColor={"outline-dark"}
-              selectArtist={()=>navigate("/appointments")}
+              selectArtist={()=>window.location.replace("")}
             />
 
             <div className="datePicke_container"></div>

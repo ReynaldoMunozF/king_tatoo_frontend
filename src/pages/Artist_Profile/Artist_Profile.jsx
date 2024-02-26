@@ -6,7 +6,8 @@ import "./Artist_Profile.css";
 import {
   getArtistById,
   getAppointmentByArtistId,
-  updateArtistById
+  updateArtistById,
+  artistRegister,
 } from "../../services/apiCalls";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -19,7 +20,8 @@ import icono_cita from "../../assets/img/icono_cita.png";
 import icono_equipo from "../../assets/img/icono_equipo.png";
 import icono_contacto from "../../assets/img/icono_contacto.png";
 import icono_mis_citas from "../../assets/img/icono_miscitas.png";
-import Image from 'react-bootstrap/Image';
+import icono_nuevoArtista from "../../assets/img/icono_nuevoArtista.png";
+import Image from "react-bootstrap/Image";
 import Table from "react-bootstrap/Table";
 import artist_1 from "../../assets/img/artista_1.jpg";
 import edit_button from "../../assets/img/edit_button.png";
@@ -34,36 +36,45 @@ export const Artist_profile = () => {
   const [profileDataUpdate, setProfileDataUpdate] = useState({
     first_name: "",
     last_name: "",
+    password: "",
     email: "",
-    // nickname: "",
+  });
+  const [newArtistData, setNewArtistData] = useState({
+    nickname: "",
+    first_name: "",
+    last_name: "",
+    password: "",
+    email: "",
+    description: "",
+    
   });
   const [appointmentsData, setAppointmentData] = useState([]);
   const userRdxData = useSelector(userData);
   const [isEditing, setIsEditing] = useState(false);
   const [isAppointment, setisAppointment] = useState(false);
   const [isNotification, setIsNotification] = useState(true);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [isNewArtist, setIsNewArtist] = useState(false);
 
   const [show, setShow] = useState(true);
 
   const token = userRdxData.credentials.token;
   const myId = userRdxData.credentials.userData?.tattoo_artist_id;
+  const role = userRdxData.credentials.userData?.role;
 
   console.log(profileData);
   console.log(appointmentsData);
   console.log(token);
+  console.log(role);
 
   console.log(token);
 
   const appointmentPending = appointmentsData.length;
   console.log(appointmentPending);
 
-  const isAppointmnetStatus = () =>{
-
+  const isAppointmnetStatus = () => {
     isAppointment ? setisAppointment(false) : setisAppointment(true);
-
-
-
-  }
+  };
 
   //console.log(artistAppointmentsData[0].user.first_name)
   useEffect(() => {
@@ -79,8 +90,10 @@ export const Artist_profile = () => {
         });
       }, 100);
     }
+    if (role === "super_admin") {
+      setIsSuperAdmin(true);
+    }
   }, []);
-
 
   const inputHandler = (event) => {
     setProfileDataUpdate((prevState) => ({
@@ -89,11 +102,17 @@ export const Artist_profile = () => {
     }));
     console.log(profileDataUpdate);
   };
+  const inputHandlerNewArtits = (event) => {
+    setNewArtistData((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+    console.log(newArtistData);
+  };
 
   const buttonHandler = () => {
     setIsEditing(!isEditing);
     console.log(isEditing);
-
   };
 
   const updateArtist = () => {
@@ -116,6 +135,13 @@ export const Artist_profile = () => {
     //window.location.replace("");
   };
 
+const createArtist = () => {
+
+  artistRegister(token,newArtistData )
+  setIsNewArtist(false); 
+}
+
+
   return (
     <div className="profile_container">
       <div className="alert_container">
@@ -127,15 +153,19 @@ export const Artist_profile = () => {
       </div>
       <Card>
         <ListGroup variant="flush">
-          <ListGroup.Item className="head_container_list" variant="secondary">{!isEditing ? (
-                <img
+          <ListGroup.Item className="head_container_list" variant="secondary">
+            {!isEditing ? (
+              <img
                 className="img_edit"
-                  src={edit_button}
-                  alt="edit"
-                  onClick={() => buttonHandler()}
-                />
-              ) : null} MI PERFIL   <Image className="img_profile" src={artist_1} roundedCircle /></ListGroup.Item>
-          
+                src={edit_button}
+                alt="edit"
+                onClick={() => buttonHandler()}
+              />
+            ) : null}{" "}
+            MI PERFIL{" "}
+            <Image className="img_profile" src={artist_1} roundedCircle />
+          </ListGroup.Item>
+
           <ListGroup.Item>
             <strong>Nickname: </strong>
             <CustomInput
@@ -144,9 +174,10 @@ export const Artist_profile = () => {
               statusFocus={true}
               name="nickname"
               type="text"
-               handler={inputHandler}
+              handler={inputHandler}
             ></CustomInput>
           </ListGroup.Item>
+
           <ListGroup.Item>
             <strong>Nombre: </strong>
             <CustomInput
@@ -155,7 +186,7 @@ export const Artist_profile = () => {
               statusFocus={!isEditing}
               name="first_name"
               type="text"
-               handler={inputHandler}
+              handler={inputHandler}
             ></CustomInput>
           </ListGroup.Item>
           <ListGroup.Item>
@@ -166,7 +197,7 @@ export const Artist_profile = () => {
               statusFocus={!isEditing}
               name="last_name"
               type="text"
-               handler={inputHandler}
+              handler={inputHandler}
             ></CustomInput>
           </ListGroup.Item>
 
@@ -193,13 +224,15 @@ export const Artist_profile = () => {
             ></CustomInput>
           </ListGroup.Item>
           {isEditing ? (
-              <ListGroup.Item className="d-flex justify-content-end align-items-start">
-                <Button variant="outline-success" onClick={() => updateArtist()}>
-                  Guardar
-                </Button>
-                <Button variant="outline-danger" onClick={() => buttonHandler()} >Anular</Button>
-              </ListGroup.Item>
-            ) : null}
+            <ListGroup.Item className="d-flex justify-content-end align-items-start">
+              <Button variant="outline-success" onClick={() => updateArtist()}>
+                Guardar
+              </Button>
+              <Button variant="outline-danger" onClick={() => buttonHandler()}>
+                Anular
+              </Button>
+            </ListGroup.Item>
+          ) : null}
         </ListGroup>
       </Card>
       <br />
@@ -214,13 +247,7 @@ export const Artist_profile = () => {
             <button className="btnNotification">{appointmentPending}</button>
           ) : null}
         </div>
-        <div className="icon">
-          <img
-            src={icono_cita}
-            alt=""
-            onClick={() => navigate("/appointments")}
-          />
-        </div>
+
         <div className="icon">
           <img src={icono_equipo} alt="" />
         </div>
@@ -229,10 +256,35 @@ export const Artist_profile = () => {
         </div>
       </div>
       <br />
+      {isSuperAdmin ? (
+        <div className="icons_container">
+          <div className="icon">
+            <img
+              src={icono_nuevoArtista}
+              alt=""
+              onClick={() => ( setIsNewArtist(true))}
+            />
+          </div>
+          <div className="icon">
+            <img
+              src={icono_cita}
+              alt=""
+              onClick={() => navigate("/appointments")}
+            />
+          </div>
+          <div className="icon">
+            <img src={icono_equipo} alt="" />
+          </div>
+          <div className="icon">
+            <img src={icono_contacto} alt="" />
+          </div>
+        </div>
+      ) : null}
+      <br />
       <div className="table_container_artist">
         {isAppointment ? (
           <Table striped bordered hover variant="dark">
-            <thead >
+            <thead>
               <tr>
                 <th>#</th>
                 <th>Nombre</th>
@@ -261,6 +313,75 @@ export const Artist_profile = () => {
           </Table>
         ) : null}
       </div>
+      {isNewArtist ? (
+        <Card>
+          <ListGroup variant="flush">
+            <ListGroup.Item className="head_container_list" variant="secondary">
+              {" "}
+              Crear Nuevo Artista{" "}
+            </ListGroup.Item>
+
+            <ListGroup.Item>
+              <strong>Nickname: </strong>
+              <CustomInput
+                name="nickname"
+                type="text"
+                handler={inputHandlerNewArtits}
+              ></CustomInput>
+            </ListGroup.Item>
+
+            <ListGroup.Item>
+              <strong>Nombre: </strong>
+              <CustomInput
+                name="first_name"
+                type="text"
+                handler={inputHandlerNewArtits}
+              ></CustomInput>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <strong>Apellido: </strong>
+              <CustomInput
+                name="last_name"
+                type="text"
+                handler={inputHandlerNewArtits}
+              ></CustomInput>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <strong>Email: </strong>
+              <CustomInput
+                name="email"
+                type="email"
+                handler={inputHandlerNewArtits}
+              ></CustomInput>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <strong>Password: </strong>
+              <CustomInput
+                name="password"
+                type="password"
+                handler={inputHandlerNewArtits}
+              ></CustomInput>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <strong>Descripción: </strong>
+              <CustomInput
+                name="description"
+                type="textarea"
+                handler={inputHandlerNewArtits}
+              ></CustomInput>
+            </ListGroup.Item>
+
+            <ListGroup.Item className="d-flex justify-content-end align-items-start">
+              <Button variant="outline-success" onClick={() => createArtist()}>
+                Guardar
+              </Button>
+              <Button variant="outline-danger" onClick={() => setIsNewArtist(false)}>
+                Anular
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
+      ) : null}
     </div>
   );
 };

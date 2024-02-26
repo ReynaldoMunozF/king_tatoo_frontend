@@ -5,8 +5,6 @@ const API_URL = "http://localhost:3000/api/";
 //const API_URL = "https://clinicamia.vercel.app"
 // const API_URL = "https://dummyjson.com"
 
-
-
 export const bringAllUsers = async () => {
   const res = await axios.get(`${API_URL}/user/find`);
   return res.data;
@@ -54,15 +52,15 @@ export const getUserById = async (token, id) => {
 export const userRegister = async (userData) => {
   try {
     const res = await axios.post(`${API_URL}authUser/register`, userData, {});
-    const data = res
+    const data = res;
     return data;
   } catch (error) {
     console.error("Error en la creación:", error);
     throw error;
   }
 };
-export const updateUserById = async ( token, id, userData) => {
-  console.log(token + 'soy el token en update');
+export const updateUserById = async (token, id, userData) => {
+  console.log(token + "soy el token en update");
   console.log(userData);
 
   try {
@@ -71,9 +69,9 @@ export const updateUserById = async ( token, id, userData) => {
         Authorization: "Bearer " + token,
       },
     };
-   console.log(config)
-    const res = await axios.patch(`${API_URL}users/${id}` , userData,config);
-    return res
+    console.log(config);
+    const res = await axios.patch(`${API_URL}users/${id}`, userData, config);
+    return res;
   } catch (error) {
     console.error("Error en update_User:", userData);
     throw error;
@@ -117,10 +115,10 @@ export const createAppointmentById = async (token, appointmentData) => {
     //     Authorization: "Bearer " + token,
     //   },
     // };
-    console.log('entro aqui en crear cita');
+    console.log("entro aqui en crear cita");
     console.log(appointmentData);
 
-    const res = await axios.post(`${API_URL}appointments`, appointmentData  );
+    const res = await axios.post(`${API_URL}appointments`, appointmentData);
     return res;
   } catch (error) {
     console.error("Error en update_Appointment:", error);
@@ -130,7 +128,7 @@ export const createAppointmentById = async (token, appointmentData) => {
 
 export const getAllArtist = async () => {
   const res = await axios.get(`${API_URL}artist`);
-  return res.data; 
+  return res.data;
 };
 
 export const getScheduleByIdArtist = async (id) => {
@@ -138,7 +136,7 @@ export const getScheduleByIdArtist = async (id) => {
   return res.data;
 };
 
-export const updateScheduleById = async (id,updateActive) => {
+export const updateScheduleById = async (id, updateActive) => {
   try {
     // const config = {
     //   headers: {
@@ -147,9 +145,9 @@ export const updateScheduleById = async (id,updateActive) => {
     // };
     console.log(updateActive);
     console.log(id);
-    
-    const res = await axios.patch(`${API_URL}schedules/${id}`,updateActive);
-    return res
+
+    const res = await axios.patch(`${API_URL}schedules/${id}`, updateActive);
+    return res;
   } catch (error) {
     console.error("Error en update_Appointment:", error);
     throw error;
@@ -200,9 +198,8 @@ export const getAppointmentByArtistId = async (token, id) => {
   }
 };
 
-
-export const updateArtistById = async ( token, id, artistData) => {
-  console.log(artistData );
+export const updateArtistById = async (token, id, artistData) => {
+  console.log(artistData);
 
   try {
     const config = {
@@ -210,11 +207,29 @@ export const updateArtistById = async ( token, id, artistData) => {
         Authorization: "Bearer " + token,
       },
     };
-   console.log(config)
-    const res = await axios.patch(`${API_URL}artist/${id}`,artistData,config);
-    return res
+    console.log(config);
+    const res = await axios.patch(`${API_URL}artist/${id}`, artistData, config);
+    return res;
   } catch (error) {
-    console.error("Error en update_Artist:", );
+    console.error("Error en update_Artist:");
+    throw error;
+  }
+};
+
+export const artistRegister = async (token, artistData) => {
+  console.log(artistData);
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const res = await axios.post(`${API_URL}authArtist/register`, artistData,config);
+    const data = res;
+    return data;
+  } catch (error) {
+    console.error("Error en la creación:", error);
     throw error;
   }
 };
