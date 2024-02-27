@@ -18,7 +18,7 @@ export const Register = () => {
     first_name: "",
     last_name: "",
     email: "",
-    // phone: 123456789,
+    phone: "",
     password: "",
   });
 

@@ -20,7 +20,7 @@ export const Header = () => {
   const logMeOut = () => {
     dispatch(logout({credentials:{}}))
     setTimeout(() => {
-      navigate("/login");
+      navigate("/");
     },1000);
   };
 
@@ -34,17 +34,17 @@ export const Header = () => {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="personajes">Contacto</Nav.Link>
-            <Nav.Link href="artistLogin">Area Trabajador</Nav.Link>
+            <Nav.Link href="artistLogin">Area Privada</Nav.Link>
             <NavDropdown  className="navdrop" title="Mi cuenta"  id="basic-nav-dropdown">
               {!token ? (
                 <>
                   <NavDropdown.Item href="login">Login</NavDropdown.Item>
                   <NavDropdown.Item href="register">Resgistrarse</NavDropdown.Item>
                 </>
-              ) : decoded.role === "ADMIN" ? (
+              ) : decoded.role === "admin" || decoded.role === "super_admin"? (
                 <>
-                  <NavDropdown.Item href="profile">Perfil</NavDropdown.Item>
-                  <NavDropdown.Item href="admin">Admin</NavDropdown.Item>
+                  <NavDropdown.Item href="artistProfile">Perfil</NavDropdown.Item>
+                  {/* <NavDropdown.Item href="admin">Admin</NavDropdown.Item> */}
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={() => logMeOut()}>Log out</NavDropdown.Item>
                 </>

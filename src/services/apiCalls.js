@@ -1,14 +1,6 @@
 import axios from "axios";
 
-// const API_URL = "https://rickandmortyapi.com/api"
 const API_URL = "http://localhost:3000/api/";
-//const API_URL = "https://clinicamia.vercel.app"
-// const API_URL = "https://dummyjson.com"
-
-export const bringAllUsers = async () => {
-  const res = await axios.get(`${API_URL}/user/find`);
-  return res.data;
-};
 
 export const deleteUser = async (token, id) => {
   const config = {
@@ -17,11 +9,6 @@ export const deleteUser = async (token, id) => {
     },
   };
   const res = await axios.delete(`${API_URL}/user/delete/${id}`, config);
-};
-
-export const bringUserById = async (id) => {
-  const res = await axios.get(`${API_URL}/users/${id}`);
-  return res.data;
 };
 
 export const userLogin = async (credentials) => {
@@ -225,11 +212,33 @@ export const artistRegister = async (token, artistData) => {
       },
     };
 
-    const res = await axios.post(`${API_URL}authArtist/register`, artistData,config);
+    const res = await axios.post(
+      `${API_URL}authArtist/register`,
+      artistData,
+      config
+    );
     const data = res;
     return data;
   } catch (error) {
     console.error("Error en la creación:", error);
+    throw error;
+  }
+};
+
+export const getAllUsers = async ( page, skip) => {
+  try {
+    // const config = {
+    //   headers: {
+    //     Authorization: "Bearer " + token,
+    //   },
+    // };
+
+    const res = await axios.get(
+      `${API_URL}users?page=${page}&skip=${skip}`
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Error en usuarios", error);
     throw error;
   }
 };

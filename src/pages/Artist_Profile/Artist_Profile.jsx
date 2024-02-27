@@ -8,9 +8,11 @@ import {
   getAppointmentByArtistId,
   updateArtistById,
   artistRegister,
+  getAllUsers,
 } from "../../services/apiCalls";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
+import Pagination from "react-bootstrap/Pagination";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
@@ -21,6 +23,7 @@ import icono_equipo from "../../assets/img/icono_equipo.png";
 import icono_contacto from "../../assets/img/icono_contacto.png";
 import icono_mis_citas from "../../assets/img/icono_miscitas.png";
 import icono_nuevoArtista from "../../assets/img/icono_nuevoArtista.png";
+import icono_usuarios from "../../assets/img/icono_usuarios.png";
 import Image from "react-bootstrap/Image";
 import Table from "react-bootstrap/Table";
 import artist_1 from "../../assets/img/artista_1.jpg";
@@ -46,7 +49,6 @@ export const Artist_profile = () => {
     password: "",
     email: "",
     description: "",
-    
   });
   const [appointmentsData, setAppointmentData] = useState([]);
   const userRdxData = useSelector(userData);
@@ -55,6 +57,22 @@ export const Artist_profile = () => {
   const [isNotification, setIsNotification] = useState(true);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const [isNewArtist, setIsNewArtist] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [isUsers, setIsUsers] = useState(false);
+  const [pageUser, setPageUser] = useState(1);
+  const [skipUser, setskipUser] = useState(10);
+  const [countUser, setcountUser] = useState();
+
+  // const usersOrden = users.sort(function (a, b) {
+  //   if (a.last_name > b.last_name) {
+  //     return 1;
+  //   }
+  //   if (a.last_name < b.last_name) {
+  //     return -1;
+  //   }
+  //   // a must be equal to b
+  //   return 0;
+  // });
 
   const [show, setShow] = useState(true);
 
@@ -71,10 +89,6 @@ export const Artist_profile = () => {
 
   const appointmentPending = appointmentsData.length;
   console.log(appointmentPending);
-
-  const isAppointmnetStatus = () => {
-    isAppointment ? setisAppointment(false) : setisAppointment(true);
-  };
 
   //console.log(artistAppointmentsData[0].user.first_name)
   useEffect(() => {
@@ -135,12 +149,55 @@ export const Artist_profile = () => {
     //window.location.replace("");
   };
 
-const createArtist = () => {
+  const createArtist = () => {
+    artistRegister(token, newArtistData);
+    setIsNewArtist(false);
+  };
 
-  artistRegister(token,newArtistData )
-  setIsNewArtist(false); 
-}
+  const allUsers = () => {
+    getAllUsers(pageUser, skipUser).then((res) => {
+      setUsers(res.results);
 
+      console.log(users);
+    });
+  };
+
+  const nextUser = () => {
+    if (pageUser >= 0) {
+    }
+    const page = pageUser + 1;
+    getAllUsers(page, skipUser).then((res) => {
+      setUsers(res.results);
+      setPageUser(res.page);
+      setskipUser(res.skip);
+      setcountUser(res.count);
+
+      console.log(users);
+    });
+  };
+  const lastUser = () => {
+    if (pageUser >= 0) {
+    }
+    const page = pageUser - 1;
+    getAllUsers(page, skipUser).then((res) => {
+      setUsers(res.results);
+      setPageUser(res.page);
+      setskipUser(res.skip);
+      setcountUser(res.count);
+
+      console.log(users);
+    });
+  };
+  const isAppointmnetStatus = () => {
+    isAppointment ? setisAppointment(false) : setisAppointment(true);
+  };
+
+  const setIsUsersStatus = () => {
+    isUsers ? setIsUsers(false) : setIsUsers(true);
+  };
+  const IsNewArtistStatus = () => {
+    isNewArtist ? setIsNewArtist(false) : setIsNewArtist(true);
+  };
 
   return (
     <div className="profile_container">
@@ -262,14 +319,14 @@ const createArtist = () => {
             <img
               src={icono_nuevoArtista}
               alt=""
-              onClick={() => ( setIsNewArtist(true))}
+              onClick={() => IsNewArtistStatus()}
             />
           </div>
           <div className="icon">
             <img
-              src={icono_cita}
+              src={icono_usuarios}
               alt=""
-              onClick={() => navigate("/appointments")}
+              onClick={() => (allUsers(), setIsUsersStatus())}
             />
           </div>
           <div className="icon">
@@ -375,13 +432,61 @@ const createArtist = () => {
               <Button variant="outline-success" onClick={() => createArtist()}>
                 Guardar
               </Button>
-              <Button variant="outline-danger" onClick={() => setIsNewArtist(false)}>
+              <Button
+                variant="outline-danger"
+                onClick={() => setIsNewArtist(false)}
+              >
                 Anular
               </Button>
             </ListGroup.Item>
           </ListGroup>
         </Card>
       ) : null}
+      <div className="users_container">
+        {isUsers ? (
+          <>
+          <Table  responsive="sm" striped bordered hover variant="light">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Fech.Nac.</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((id, index) => (
+                <tr key={index}>
+                  <td>{users[index].id}</td>
+                  <td>{users[index].first_name}</td>
+                  <td>{users[index].last_name}</td>
+                  <td >{users[index].email}</td>
+                  <td>{users[index].phone}</td>
+                  <td>{moment(users[index].birthday).format("DD/MM/YYYY")}</td>
+                  {/* <td>
+                    {moment(users[index].created_at).format("DD/MM/YYYY")}
+                  </td> */}
+                </tr>
+              ))}
+              
+            </tbody>
+            
+          </Table>
+          
+          <div className="pagination_container">
+          <Pagination>
+            {/* <Pagination.First /> */}
+            <Pagination.Prev onClick={() => lastUser()} />
+            <Pagination.Item>{1}</Pagination.Item>
+            <Pagination.Next onClick={() => nextUser()} />
+            {/* <Pagination.Last /> */}
+          </Pagination>
+          </div>
+          </>) : null}
+      </div>
     </div>
   );
 };
