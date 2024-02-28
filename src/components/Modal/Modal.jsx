@@ -28,7 +28,7 @@ export const ModalAppointment = ({
           <Modal.Title>{Title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>
+          
             <p>
               {" "}
               <strong>Día : {date}</strong>
@@ -36,7 +36,7 @@ export const ModalAppointment = ({
             <p>
               <strong>Hora : {hour}</strong>
             </p>
-          </p>
+          
           <ul>
             <li>
               Recuerda que para anular esta cita, el plazo m&aacute;ximo es 48
@@ -52,7 +52,7 @@ export const ModalAppointment = ({
               </ul>
             </li>
           </ul>
-          <label for="cbox1">
+          <label htmlFor="cbox1">
             <input type="checkbox" id="cbox1" value="first_checkbox" onClick={() =>btn_acepted()} /> Acepto las condiciones 
           </label>
         </Modal.Body>

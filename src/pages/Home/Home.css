@@ -1,5 +1,15 @@
 .portada_principal {
   display: flex;
+  flex-direction: column;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 2em;
+}
+
+.first_container {
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap-reverse;
   justify-content: center;
@@ -47,10 +57,17 @@
 }
 .btn_container {
   display: flex;
-  margin-top: 12.5em;
-
+  margin-top: 3em;
   width: 18em;
 }
+@media (max-width: 600px) {
+  .btn_container {
+    width: 16em;
+    margin-top: 1em;
+    
+  }
+}
+
 .login_container {
   display: flex;
   flex-direction: column;
@@ -71,10 +88,10 @@
   align-items: center;
   background-color: rgb(255, 255, 255);
   width: 20em;
-  height: 20em;
+  height: 25em;
 
   border-radius: 10px;
-  gap: 1em;
+  gap: 0.5em;
   box-shadow: 1px 2px 3px black;
 }
 .login_container input {
@@ -88,7 +105,54 @@
   width: 13em;
 }
 
-.register h3{
+.register p{
     font-size: 0.8em;
     color: red ;
+}
+.btn_alert{
+  border-color:  red ;
+  border-radius: 50%;
+  background-color: red ; 
+   box-shadow: none;
+    font-size: 1em;
+    color: rgb(255, 255, 255) ;
+   
+}
+
+@media (max-width: 600px) {
+  .register {
+    width: 25em;
+    height: 20em;
+    font-size: 0.8em;
+  }
+}
+@media (max-width: 600px) {
+  .register input {
+    width: 18em;
+    
+  }
+}
+
+.commit_container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em !important;
+}
+.commit_text{
+display: flex ;
+text-align: center;
+width: 25em;
+margin-top: 2em;
+font-size: 1em;
+}
+.cardcommit_container{
+  display: flex;
+  
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+
 }
