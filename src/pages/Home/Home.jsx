@@ -6,6 +6,19 @@ import { useEffect, useState } from "react";
 import promo_1 from "../../assets/img/promo_1.jpg";
 import promo_2 from "../../assets/img/promo_2.jpg";
 import promo_3 from "../../assets/img/promo_3.jpg";
+import img1 from "../../assets/img/img1.jpg";
+import img2 from "../../assets/img/img2.jpg";
+import img3 from "../../assets/img/img3.jpg";
+import img4 from "../../assets/img/img4.jpg";
+import img5 from "../../assets/img/img5.jpg";
+import img6 from "../../assets/img/img6.jpg";
+import img7 from "../../assets/img/img7.jpg";
+import img8 from "../../assets/img/img8.jpg";
+import img9 from "../../assets/img/img9.jpg";
+import img10 from "../../assets/img/img10.jpg";
+import img11 from "../../assets/img/img11.jpg";
+import img12 from "../../assets/img/img12.jpg";
+import img13 from "../../assets/img/img13.jpg";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
@@ -241,6 +254,20 @@ export const Home = () => {
           ) : null}
         </div>
       </div>
+      <div className="commit_text">
+        <p>"Aquí encontrarás una colección de arte en la piel, donde cada diseño es una expresión única de estilo y personalidad. Desde diseños geométricos hasta obras realistas, nuestro equipo de artistas trabaja para plasmar tus ideas en tinta. Explora nuestra galería para inspirarte y encontrar tu próxima obra maestra. En King Tattoo, transformamos ideas en arte. ¡Gracias por visitarnos en línea!"</p>
+        </div>
+      <div className="img_galery">
+        <section>
+          <img src={img9} alt="" />
+          <img src={img10} alt="" />
+          <img src={img11} alt="" />
+          <img src={img12} alt="" />
+          <img src={img13} alt="" />
+
+        </section>
+      </div>
+      
 
       <div className="commit_container">
         <div className="commit_text">
