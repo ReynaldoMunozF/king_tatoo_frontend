@@ -102,43 +102,38 @@ export const Home = () => {
       return setIsAlertMail(true);
     }
 
-    userRegister(userDataRegister);
-
     console.log(userDataRegister);
 
     userRegister(userDataRegister)
       .then(() => {
-        navigate("/profile");
+        credentials.email = userDataRegister.email;
+        credentials.password = userDataRegister.password;
+
+        debugger;
+
+        userLogin(credentials).then((token) => {
+          if (!token) {
+            navigate("/register");
+            return null;
+          }
+          const decodedToken = jwtDecode(token);
+
+          const data = {
+            token: token,
+            userData: decodedToken,
+          };
+          dispatch(login({ credentials: data }));
+          setTimeout(() => {
+            navigate("/profile");
+          });
+        });
       })
       .catch(
         (err) => console.error("Ha ocurrido un error", err)
         //   setShow(false), setShow2(true)
       );
 
-    credentials.email = userDataRegister.email;
-    credentials.password = userDataRegister.password;
-
-    userLogin(credentials)
-      .then((token) => {
-        if (!token) {
-          navigate("/register");
-          return null;
-        }
-        const decodedToken = jwtDecode(token);
-
-        const data = {
-          token: token,
-          userData: decodedToken,
-        };
-        dispatch(login({ credentials: data }));
-        setTimeout(() => {
-          navigate("/profile");
-        });
-      })
-      .catch(
-        (err) => console.error("Ha ocurrido un error", err)
-        // setShow(false), setShow2(true)
-      );
+   
   };
 
   return (
@@ -255,8 +250,15 @@ export const Home = () => {
         </div>
       </div>
       <div className="commit_text">
-        <p>"Aquí encontrarás una colección de arte en la piel, donde cada diseño es una expresión única de estilo y personalidad. Desde diseños geométricos hasta obras realistas, nuestro equipo de artistas trabaja para plasmar tus ideas en tinta. Explora nuestra galería para inspirarte y encontrar tu próxima obra maestra. En King Tattoo, transformamos ideas en arte. ¡Gracias por visitarnos en línea!"</p>
-        </div>
+        <p>
+          "Aquí encontrarás una colección de arte en la piel, donde cada diseño
+          es una expresión única de estilo y personalidad. Desde diseños
+          geométricos hasta obras realistas, nuestro equipo de artistas trabaja
+          para plasmar tus ideas en tinta. Explora nuestra galería para
+          inspirarte y encontrar tu próxima obra maestra. En King Tattoo,
+          transformamos ideas en arte. ¡Gracias por visitarnos en línea!"
+        </p>
+      </div>
       <div className="img_galery">
         <section>
           <img src={img9} alt="" />
@@ -264,23 +266,38 @@ export const Home = () => {
           <img src={img11} alt="" />
           <img src={img12} alt="" />
           <img src={img13} alt="" />
-
         </section>
       </div>
-      
 
       <div className="commit_container">
         <div className="commit_text">
-        <p>En <strong>King Tattoo</strong>, nos enorgullece compartir las experiencias positivas y las calificaciones entusiastas de nuestros queridos clientes. Para nosotros, cada tatuaje es una obra de arte única, y la satisfacción de nuestros clientes es nuestra máxima prioridad.</p>
+          <p>
+            En <strong>King Tattoo</strong>, nos enorgullece compartir las
+            experiencias positivas y las calificaciones entusiastas de nuestros
+            queridos clientes. Para nosotros, cada tatuaje es una obra de arte
+            única, y la satisfacción de nuestros clientes es nuestra máxima
+            prioridad.
+          </p>
         </div>
         <div className="cardcommit_container">
-        <CardComments 
-        Title={"Maria Fernanda"}
-        commit={ "¡Increíble experiencia en King Tattoo! El artista capturó exactamente lo que tenía en mente y el resultado final superó mis expectativas. El ambiente del estudio es acogedor y profesional. ¡Definitivamente volveré por más!"}/>
-        <CardComments Title={"Rafael"}
-        commit={ "He sido cliente de king Tattoo durante años, y nunca me han decepcionado. Cada artista aquí tiene un talento excepcional y un ojo para el detalle. No puedo recomendarlos lo suficiente a cualquiera que busque un tatuaje de calidad."}/> 
-        <CardComments Title={"Paula Alexandra"}
-        commit={  "¡Me encanta mi nuevo tatuaje! El equipo fue increíblemente amable y servicial durante todo el proceso. Desde el diseño inicial hasta la sesión de tatuaje, me sentí en buenas manos. Definitivamente regresaré para mi próximo proyecto."}/> 
+          <CardComments
+            Title={"Maria Fernanda"}
+            commit={
+              "¡Increíble experiencia en King Tattoo! El artista capturó exactamente lo que tenía en mente y el resultado final superó mis expectativas. El ambiente del estudio es acogedor y profesional. ¡Definitivamente volveré por más!"
+            }
+          />
+          <CardComments
+            Title={"Rafael"}
+            commit={
+              "He sido cliente de king Tattoo durante años, y nunca me han decepcionado. Cada artista aquí tiene un talento excepcional y un ojo para el detalle. No puedo recomendarlos lo suficiente a cualquiera que busque un tatuaje de calidad."
+            }
+          />
+          <CardComments
+            Title={"Paula Alexandra"}
+            commit={
+              "¡Me encanta mi nuevo tatuaje! El equipo fue increíblemente amable y servicial durante todo el proceso. Desde el diseño inicial hasta la sesión de tatuaje, me sentí en buenas manos. Definitivamente regresaré para mi próximo proyecto."
+            }
+          />
         </div>
       </div>
     </div>

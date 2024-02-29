@@ -58,11 +58,12 @@ Tecnologías utilizadas:
 
 
 ## Instalación en local
-1. Clonar el repositorio
-2. ` $ npm install `
+1. Clonar el repositorio tanto de back-end y front-end
+2. ` $ npm install ` 
 3. Conectamos nuestro repositorio con la base de datos 
 4. ``` $ Ejecutamos las migraciones ``` 
-5. ``` $ npm run dev ``` 
+5. ``` $ npm run dev ``` en el back-end
+6. ``` $ npm run dev ``` en el front-end
 
 
 ## Manual de Usuario
@@ -80,13 +81,34 @@ Tecnologías utilizadas:
 
 !['imagen-3'](./src/assets/img/readme/3.png)
 
+#Al darle click en NUEVA CITA se redirigira a la pagina de Nuestro Equipo, donde podras seleccionar al tatuador con quien deseas la cita 
 
+* luego seleeccionaras la fecha y la hora 
+* Se aceptaran las condiciones dandole al checkbox de confirmacion y se creara la cita 
+* En la página del perfil podras verificar que la cita esta creada dandole a mis citas 
+
+!['imagen-4'](./src/assets/img/readme/4.png)
+!['imagen-5'](./src/assets/img/readme/5.png)
+!['imagen-6'](./src/assets/img/readme/6.png)
+!['imagen-7'](./src/assets/img/readme/7.png)
+!['imagen-8'](./src/assets/img/readme/8.png)
+
+#En el area privada podras ingresar al panel de artistas los cuales tendran las notificaciones si tienen alguna cita asignada, tambien podrán modificar su perfil
+
+!['imagen-9'](./src/assets/img/readme/9.png)
+!['imagen-10'](./src/assets/img/readme/10.png)
+
+#En el area privada con permisos de super admin tendran la opcion de crear un nuevo artista, ver todos los usuarios y eliminarlos 
+
+!['imagen-10'](./src/assets/img/readme/11.png)
+!['imagen-10'](./src/assets/img/readme/12.png)
 
 
 
 ## Futuras funcionalidades
-[ ] Añadir admin, superadmin 
+[ ] Añadir tipos de tatuajes 
 [ ] Vizualizar Diseño de tattoo
+[ ] Eliminar tatuadores desde super admin 
  
 
 ## Contribuciones
@@ -115,13 +137,16 @@ Este proyecto se encuentra bajo licencia de "ReynaldoM"
 
 ## Webgrafia:
 Para conseguir mi objetivo he recopilado información de:
-- https://www.npmjs.com/package//typeorm
+- https://react-bootstrap.netlify.app/
+- https://www.npmjs.com/package/react-datepicker
 
 
 ## Agradecimientos:
 
-Agradezco a mis compañeros el tiempo dedicado a este proyecto:
+Agradezco al claustro de GeeksHub por el tiempo dedicado a darnos el contenido y el continuo seguimiento.
 
+
+A mi hermano le debo una cerveza por se mi patito de goma favorito (gracias por aguntar la chapa)
 
 
 - ***Rodrigo***  

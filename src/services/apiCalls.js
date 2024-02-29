@@ -5,7 +5,9 @@ const API_URL = "http://localhost:3000/api/";
 
 
 export const userLogin = async (credentials) => {
+  console.log(credentials );
   try {
+
     const res = await axios.post(`${API_URL}authUser/login`, credentials, {});
     const token = res.data.token;
     return token;
@@ -30,6 +32,7 @@ export const getUserById = async (token, id) => {
   }
 };
 export const userRegister = async (userData) => {
+
   try {
     const res = await axios.post(`${API_URL}authUser/register`, userData, {});
     const data = res;
