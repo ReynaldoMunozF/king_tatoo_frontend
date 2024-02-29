@@ -10,7 +10,6 @@
     <li><a href="#objetivo">Objetivo</a></li>
     <li><a href="#sobre-el-proyecto">Sobre el proyecto</a></li>
     <li><a href="#stack">Stack</a></li>
-    <li><a href="#diagrama-bd">Diagrama</a></li>
     <li><a href="#instalación-en-local">Instalación</a></li>
     <li><a href="#endpoints">Manual de Uso</a></li>
     <li><a href="#futuras-funcionalidades">Futuras funcionalidades</a></li>
@@ -48,7 +47,7 @@ permitirá la edición y borrado de éstos.
 
 ## Stack
 Tecnologías utilizadas:
-<div align="center">
+<div >
 <li>REACT</li>    
 <li>REACT BOOTSTRAP</li>    
 <li>JAVASCRIPT</li>    
@@ -57,8 +56,6 @@ Tecnologías utilizadas:
  </div>
 
 
-## Diagrama BD
-!['imagen-db'](./img/bbdd.png)
 
 ## Instalación en local
 1. Clonar el repositorio
@@ -68,145 +65,10 @@ Tecnologías utilizadas:
 5. ``` $ npm run dev ``` 
 
 
-## Endpoints
-<details>
-<summary>Endpoints</summary>
-
-http://localhost:3000
-
-    - REGISTER USER
-
-            POST /api/authUser/register
-        body:
-        ``` js
-           {
-            "username" : "usuario.prueba.register",
-            "first_name": "prueba",
-            "last_name": "prueba",
-            "password": "123456",
-            "phone": "789456123",
-            "email" : "usuario.prueba.register@example.com"
-           }
-        ```
-
-    - LOGIN
-
-            POST /api/authUser/login  
-        body:
-        ``` js
-            {
-                
-                 "email": "usuario.prueba.register@example.com",
-                 "password":"123456"
-
-            }
-        ```
-    - USER PROFILE 
-
-            GET /api/users/1   MIDDLEWARE (auth) 
-       
-    - UPDATE PROFILE 
-
-            PATCH /api/users/1    MIDDLEWARE (auth)
-        body:
-        ``` js
-             {
-                "username" : "cambionuevoreynaldo52.munoz",
-                "first_name": "cambioreynaldo",
-                "last_name": "munoz",
-                "email" : "cambionuevoreynaldo52@example.com",
-                "password": "123456"
-            }
-        ```
-    - REGISTER ARTIST
-
-            POST /api/authArtist/register
-        body:
-        ``` js
-           {
-                "nickname" : "aaaaaUsiarioPriebaCita",
-                "first_name": "UsiarioPriebaCi",
-                "last_name": "FuCita",
-                "password": "123456",
-                "email" : "caaaaaita@example.com",
-                "role" : "admin"    
-           }
-        ```
-
-    - LOGIN
-
-            POST /api/authArtist/login  
-        body:
-        ``` js
-            {
-                
-                 "password": "123456",
-                "email" : "caaaaaita@example.com"
-
-            }
-        ```
-    - ARTIST PROFILE 
-
-            GET /api/authArtist/1   MIDDLEWARE (authArtist , isAdmin) 
-       
-    - UPDATE  ARTIST PROFILE 
-
-            PATCH /api/authArtist/1   MIDDLEWARE (authArtist , isAdmin) 
-        body:
-        ``` js
-             {
-                "nickname" : "UsiarioPriebaCita",
-                "first_name": "PRUEBAUsiarioPriebaCi",
-                "last_name": "PRUEBAFuCita",
-            }
-        ```
-
-        
-    - APPOINTMENT CREATION
-
-            POST /api/appointments/ 
-        body:
-        ``` js
-            {
-                
-                  "user_id": 1,
-                  "tattoo_artist_id": 1,
-                  "appointment_date": "2024-04-17 10:30:00"
-
-            }
-        ```
-        
-    - APPOINTMENT UPDATE
-
-            PATCH /api/appointments/1
-        body:
-        ``` js
-            {
-                
-                  "user_id": 1,
-                  "tattoo_artist_id": 2,
-                  "appointment_date": "2024-04-21 10:30:00"
-
-            }
-        ```
-     - APPOINTMENT DELETE
-
-            DELETE /api/appointments/1
-
-     - USER APPOINTMENT
-
-            GET /api/users/1/appointments
-
-     - TATTOO_ARTIST APPOINTMENT
-
-            GET /api/artist/1/appointments  MIDDLEWARE (authArtist)
- 
+## Manual de Usuario
+!['imagen-1'](./src/assets/img/readme/1.png)
 
 
-
-
-    - ...
-</details>
 
 ## Futuras funcionalidades
 [ ] Añadir admin, superadmin 
