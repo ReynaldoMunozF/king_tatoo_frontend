@@ -6,14 +6,6 @@ import { useEffect, useState } from "react";
 import promo_1 from "../../assets/img/promo_1.jpg";
 import promo_2 from "../../assets/img/promo_2.jpg";
 import promo_3 from "../../assets/img/promo_3.jpg";
-import img1 from "../../assets/img/img1.jpg";
-import img2 from "../../assets/img/img2.jpg";
-import img3 from "../../assets/img/img3.jpg";
-import img4 from "../../assets/img/img4.jpg";
-import img5 from "../../assets/img/img5.jpg";
-import img6 from "../../assets/img/img6.jpg";
-import img7 from "../../assets/img/img7.jpg";
-import img8 from "../../assets/img/img8.jpg";
 import img9 from "../../assets/img/img9.jpg";
 import img10 from "../../assets/img/img10.jpg";
 import img11 from "../../assets/img/img11.jpg";
@@ -109,8 +101,6 @@ export const Home = () => {
         credentials.email = userDataRegister.email;
         credentials.password = userDataRegister.password;
 
-        debugger;
-
         userLogin(credentials).then((token) => {
           if (!token) {
             navigate("/register");
@@ -132,8 +122,6 @@ export const Home = () => {
         (err) => console.error("Ha ocurrido un error", err)
         //   setShow(false), setShow2(true)
       );
-
-   
   };
 
   return (
@@ -153,7 +141,7 @@ export const Home = () => {
           </Carousel>
         </div>
         <div className="register_conatiner">
-          {/* <img className="img_logo" src={logo_home} alt="soy yo" /> */}
+         
           <div className="btn_container">
             <Button
               variant="dark"

@@ -172,12 +172,18 @@ export const Appointments = () => {
        
       </div>
       <div className="artists_container">
-        {show ? (
+        {show  ? (
+        
           artistData.map((id, index) => (
+
+           
+            
             <ArtistCard
             photo={artist_photo[index]}
+            
               key={index}
               artist={artistData[index].nickname}
+              description={artistData[index].description}
               selectArtist={() =>
                 artistSelect(artistData[index].id, artistData[index].nickname, artist_photo[index])
               }

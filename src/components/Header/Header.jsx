@@ -35,11 +35,12 @@ export const Header = () => {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="personajes">Contacto</Nav.Link>
             <Nav.Link href="artistLogin">Area Privada</Nav.Link>
+            
             <NavDropdown  className="navdrop" title="Mi cuenta"  id="basic-nav-dropdown">
               {!token ? (
                 <>
-                  <NavDropdown.Item href="login">Login</NavDropdown.Item>
-                  <NavDropdown.Item href="register">Resgistrarse</NavDropdown.Item>
+                  <NavDropdown.Item href="/">Login</NavDropdown.Item>
+                  {/* <NavDropdown.Item href="register">Resgistrarse</NavDropdown.Item> */}
                 </>
               ) : decoded.role === "admin" || decoded.role === "super_admin"? (
                 <>

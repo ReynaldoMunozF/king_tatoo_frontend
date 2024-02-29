@@ -133,7 +133,7 @@ Puedes hacerlo de dos maneras:
     - Abre una solicitud de Pull Request
 
 ## Licencia
-Este proyecto se encuentra bajo licencia de "ReynaldoM"
+Este proyecto se encuentra bajo licencia de "MIT License"
 
 ## Webgrafia:
 Para conseguir mi objetivo he recopilado información de:

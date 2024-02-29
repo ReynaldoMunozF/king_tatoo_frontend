@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-export const ArtistCard = ({ artist, selectArtist, nombre ,BtnColor,photo}) => {
+export const ArtistCard = ({ artist, selectArtist, nombre ,BtnColor,photo, description}) => {
   return (
     <Card style={{ width: "20rem" }}>
       <Card.Img
@@ -11,7 +11,7 @@ export const ArtistCard = ({ artist, selectArtist, nombre ,BtnColor,photo}) => {
       <Card.Body>
         <Card.Title>{artist}</Card.Title>
         <Card.Text className="text-center" >
-         Artista especializado en realismo y ultrarealizmo
+        {description}
         </Card.Text>
 
         <Button variant={BtnColor} onClick={selectArtist}>{nombre}</Button>
