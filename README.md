@@ -67,7 +67,19 @@ Tecnologías utilizadas:
 
 ## Manual de Usuario
 #En la pantalla principal podras elegir entre iniciar sesión o registrarte
+
 !['imagen-1'](./src/assets/img/readme/1.png)
+!['imagen-2'](./src/assets/img/readme/2.png)
+
+#En la pantalla de perfil contaras con las siguientes opciones:
+* Editar tu perfil 
+* Ver tus citas pendientes
+* Crear una nueva Cita
+* Ver a los Tatuadores actuales
+* ir a la pagina de soporte 
+
+!['imagen-3'](./src/assets/img/readme/3.png)
+
 
 
 
