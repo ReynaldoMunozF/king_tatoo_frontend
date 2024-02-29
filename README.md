@@ -66,7 +66,9 @@ Tecnologías utilizadas:
 
 
 ## Manual de Usuario
+#En la pantalla principal podras elegir entre iniciar sesión o registrarte
 !['imagen-1'](./src/assets/img/readme/1.png)
+
 
 
 
