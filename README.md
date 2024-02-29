@@ -66,7 +66,7 @@ Tecnologías utilizadas:
 
 
 ## Manual de Usuario
-!['imagen-1'](./src/assets/img/readme/1.png)
+(./src/assets/img/readme/1.png)
 
 
 
