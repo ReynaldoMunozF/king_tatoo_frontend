@@ -139,9 +139,9 @@ export const Artist_profile = () => {
     if (profileDataUpdate.last_name == "") {
       profileDataUpdate.last_name = profileData.last_name;
     }
-    // if (profileDataUpdate.nickname == "") {
-    //   profileDataUpdate.nickname = profileData.nickname;
-    // }
+    if (profileDataUpdate.password == "") {
+      profileDataUpdate.password = profileData.password;
+    }
     if (profileDataUpdate.email == "") {
       profileDataUpdate.email = profileData.email;
     }
