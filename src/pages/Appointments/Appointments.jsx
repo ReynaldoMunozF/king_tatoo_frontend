@@ -42,6 +42,7 @@ export const Appointments = () => {
     tattoo_artist_id: 0,
     appointment_date: "",
     hour: "",
+    schedules_id: 0,
   });
   const [scheduleId, setScheduleId] = useState(0);
   const [show, setShow] = useState(true);
@@ -57,10 +58,7 @@ export const Appointments = () => {
 
   const artist_photo = [artist_1, artist_2, artist_3, artist_4, artist_5, artist_6]
 
-  const isWeekday = date => {
-    const day = getDay(date);
-    return day !== 0 && day !== 6;
-  };
+ 
   useEffect(() => {
     if (!token) {
       navigate("/register");
@@ -131,9 +129,11 @@ export const Appointments = () => {
       tattoo_artist_id: artistSelectId,
       appointment_date: moment(startDate).format("YYYY-MM-DD"),
       hour: hourArtist,
+      schedules_id: selectScheduleId,
     }));
   };
   console.log(scheduleId + "soy el schedule");
+  console.log(appointmentData);
 
   const closeModal = () => {
     setShowModal(false);

@@ -9,6 +9,7 @@ import {
   updateArtistById,
   artistRegister,
   getAllUsers,
+  deleteUserById,
 } from "../../services/apiCalls";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -24,6 +25,7 @@ import icono_contacto from "../../assets/img/icono_contacto.png";
 import icono_mis_citas from "../../assets/img/icono_miscitas.png";
 import icono_nuevoArtista from "../../assets/img/icono_nuevoArtista.png";
 import icono_usuarios from "../../assets/img/icono_usuarios.png";
+import icono_borrar from "../../assets/img/icono_borrar.png";
 import Image from "react-bootstrap/Image";
 import Table from "react-bootstrap/Table";
 import artist_1 from "../../assets/img/artista_1.jpg";
@@ -198,6 +200,12 @@ export const Artist_profile = () => {
   const IsNewArtistStatus = () => {
     isNewArtist ? setIsNewArtist(false) : setIsNewArtist(true);
   };
+
+  const deleteUser = (id) => {
+console.log(id + ' deleted');
+    deleteUserById(id,token);
+    setIsUsers(false);
+  }
 
   return (
     <div className="profile_container">
@@ -466,9 +474,8 @@ export const Artist_profile = () => {
                   <td >{users[index].email}</td>
                   <td>{users[index].phone}</td>
                   <td>{moment(users[index].birthday).format("DD/MM/YYYY")}</td>
-                  {/* <td>
-                    {moment(users[index].created_at).format("DD/MM/YYYY")}
-                  </td> */}
+                  <td><img className="icono_borrar" src={icono_borrar} alt="" onClick={()=>deleteUser(users[index].id)} /></td>
+                 
                 </tr>
               ))}
               

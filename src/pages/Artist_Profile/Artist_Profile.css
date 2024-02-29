@@ -110,3 +110,6 @@
   display: flex;
   justify-content: center;
 }
+.icono_borrar{
+  width: 2.5em;
+}

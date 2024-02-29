@@ -7,6 +7,8 @@ import {
   getAllArtist,
   // updateAppointmentById,
   updateUserById,
+  deleteAppointmentById,
+  updateScheduleById,
 } from "../../services/apiCalls";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { useSelector } from "react-redux";
@@ -32,6 +34,7 @@ import icono_cita from "../../assets/img/icono_cita.png";
 import icono_equipo from "../../assets/img/icono_equipo.png";
 import icono_contacto from "../../assets/img/icono_contacto.png";
 import icono_mis_citas from "../../assets/img/icono_miscitas.png";
+import icono_borrar from "../../assets/img/icono_borrar.png";
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -70,10 +73,9 @@ export const Profile = () => {
           console.log(res, "soy la respuesta de los artist");
           setArtistData(res);
         });
-      }, 1000);
+      }, 100);
     }
   }, []);
-  //console.log(artistData[0].nickname);
 
   const inputHandler = (event) => {
     setProfileDataUpdate((prevState) => ({
@@ -83,36 +85,33 @@ export const Profile = () => {
     console.log(profileDataUpdate);
   };
 
-  useEffect(() => {
-    //   //console.log(profileData)
-  }, [profileDataUpdate]);
+  useEffect(() => {}, [profileDataUpdate]);
 
   const buttonHandler = () => {
     setIsEditing(!isEditing);
     console.log(isEditing);
-
-    // if (isEditing === false) {
-    //     setIsEditing(true)
-    // } else {
-    //     setIsEditing(false)
-    // }
   };
   const userAppointment = () => {
     getAppointmentById(token, myId).then((res) => {
       console.log(res, "soy la respuesta de appointments");
       setAppointmentData(res);
     });
-
-    //console.log(appointmentData[0]?.appointment_date);
   };
 
-  const isAppointmnetStatus = () =>{
-
+  const isAppointmnetStatus = () => {
     isAppointment ? setisAppointment(false) : setisAppointment(true);
+  };
 
+  const deleteAppointment = (id, schedulesId) => {
+    console.log(id);
+    deleteAppointmentById(token, id);
+    const updateActive = {
+      active: 1,
+    };
 
-
-  }
+    updateScheduleById(schedulesId, updateActive);
+    setisAppointment(false);
+  };
 
   const updateUser = () => {
     console.log(profileDataUpdate.first_name);
@@ -160,7 +159,6 @@ export const Profile = () => {
                 type="text"
                 handler={inputHandler}
               ></CustomInput>
-              {/* <img src= {edit_button} alt="edit" onClick={()=> buttonHandler()} /> */}
             </ListGroup.Item>
             <ListGroup.Item>
               <strong>Apellidos:</strong>
@@ -231,7 +229,7 @@ export const Profile = () => {
             <img
               src={icono_mis_citas}
               alt=""
-              onClick={() => (userAppointment(),isAppointmnetStatus())}
+              onClick={() => (userAppointment(), isAppointmnetStatus())}
             />
           </div>
           <div className="icon">
@@ -258,36 +256,37 @@ export const Profile = () => {
                   <th>Artista</th>
                   <th>Fecha</th>
                   <th>Hora</th>
+                  <th>Anular</th>
                 </tr>
               </thead>
               <tbody>
                 {appointmentData.map((id, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{artistData[index]?.nickname}</td>
+                    <td>{artistData[index+1]?.nickname}</td>
                     <td>
                       {moment(appointmentData[index].appointment_date).format(
                         "DD/MM/YYYY"
                       )}
                     </td>
                     <td>{appointmentData[index].hour}</td>
-                   
+                    <td>
+                      <img
+                        src={icono_borrar}
+                        alt=""
+                        onClick={() =>
+                          deleteAppointment(
+                            appointmentData[index].id,
+                            appointmentData[index].schedules_id
+                          )
+                        }
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </Table>
           ) : null}
-
-          {/* {appointmentData.map((id, index) => (
-            <Tables
-              key={index}
-              artist={artistData[index]?.nickname}
-              date={moment(appointmentData[index].appointment_date).format(
-                "DD-MM-YYYY"
-              )}
-              hour={appointmentData[index].hour}
-            />
-          ))} */}
         </div>
         <div className="btn_conatiner">
           <div className="imgBtn">

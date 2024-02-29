@@ -2,14 +2,7 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3000/api/";
 
-export const deleteUser = async (token, id) => {
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-  const res = await axios.delete(`${API_URL}/user/delete/${id}`, config);
-};
+
 
 export const userLogin = async (credentials) => {
   try {
@@ -64,6 +57,23 @@ export const updateUserById = async (token, id, userData) => {
     throw error;
   }
 };
+export const deleteUserById = async (id,token) => {
+  
+console.log(id + "soy el id en delete");
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    console.log(config);
+    const res = await axios.delete(`${API_URL}users/${id}`,config);
+    return res;
+  } catch (error) {
+    console.error("Error en update_User:", userData);
+    throw error;
+  }
+};
 
 export const getAppointmentById = async (token, id) => {
   try {
@@ -91,6 +101,22 @@ export const updateAppointmentById = async (token, id) => {
     return res.data;
   } catch (error) {
     console.error("Error en update_Appointment:", error);
+    throw error;
+  }
+};
+export const deleteAppointmentById = async (token, id) => {
+
+  
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const res = await axios.delete(`${API_URL}appointments/${id}`, config);
+    return res.data;
+  } catch (error) {
+    console.error("Error en delete_Appointment:", error);
     throw error;
   }
 };
@@ -140,6 +166,8 @@ export const updateScheduleById = async (id, updateActive) => {
     throw error;
   }
 };
+
+
 
 // <--------------------------------------------------------------------------------------------
 

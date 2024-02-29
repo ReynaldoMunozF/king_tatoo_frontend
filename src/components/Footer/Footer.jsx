@@ -24,7 +24,7 @@ export const Footer = () => {
           </li>
         </ul>
       </div>
-      <p class="footer__texto">&copy; 2024 Reynaldo Muñoz Flores, Inc</p>
+      <p className="footer__texto">&copy; 2024 Reynaldo Muñoz Flores, Inc</p>
     </footer>
   );
 };
