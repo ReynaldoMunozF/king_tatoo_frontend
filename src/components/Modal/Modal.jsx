@@ -37,21 +37,22 @@ export const ModalAppointment = ({
               <strong>Hora : {hour}</strong>
             </p>
           
-          <ul>
+          
             <li>
               Recuerda que para anular esta cita, el plazo m&aacute;ximo es 48
               horas antes de la misma
             </li>
-            <li>
+            <p>
+              <br />
               El d&iacute;a de la cita toma en cuenta estas recomendaciones:
-              <ul>
+              
                 <li>Toma suficiente agua para mantenerte hidratado.</li>
                 <li>No ingerir alcohol previamente.</li>
                 <li>Ven con ropa c&oacute;moda.</li>
                 <li>Se puntual.</li>
-              </ul>
-            </li>
-          </ul>
+              
+            </p>
+          
           <label htmlFor="cbox1">
             <input type="checkbox" id="cbox1" value="first_checkbox" onClick={() =>btn_acepted()} /> Acepto las condiciones 
           </label>

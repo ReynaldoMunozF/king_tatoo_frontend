@@ -1,20 +1,30 @@
-import React from 'react';
+import React from "react";
+import "./Footer.css";
 
+export const Footer = () => {
+  return (
+    <footer>
+      <div className="footer_container">
+        <ul>
+          <li>
+            <a href="https://www.linkedin.com/in/reynaldo-muñoz-flores">
+              Linkedin
+            </a>
+          </li>
 
-export const Footer = () =>{
+          <li>
+            <a href="mailto:reynaldo.munozf21@gmail.com">Email</a>
+          </li>
 
-
-
-
-
-
-
-
-    return (
-        <>
-        
-        
-        
-        </>
-    )
-}
+          <li>
+            <a href="https://github.com/ReynaldoMunozF">Github</a>
+          </li>
+          <li>
+            <p>👋</p>
+          </li>
+        </ul>
+      </div>
+      <p class="footer__texto">&copy; 2024 Reynaldo Muñoz Flores, Inc</p>
+    </footer>
+  );
+};
