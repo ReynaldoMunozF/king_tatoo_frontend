@@ -180,6 +180,7 @@ export const updateScheduleById = async (id, updateActive) => {
 // <--------------------------------------------------------------------------------------------
 
 export const artistLogin = async (credentials) => {
+  
   try {
     const res = await axios.post(`${API_URL}authArtist/login`, credentials, {});
     const token = res.data.token;
