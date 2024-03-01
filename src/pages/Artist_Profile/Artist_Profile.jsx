@@ -17,12 +17,11 @@ import Pagination from "react-bootstrap/Pagination";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
-import { ListGroupItem } from "react-bootstrap";
-import Alert from "react-bootstrap/Alert";
-import icono_cita from "../../assets/img/icono_cita.png";
+
 import icono_equipo from "../../assets/img/icono_equipo.png";
 import icono_contacto from "../../assets/img/icono_contacto.png";
 import icono_mis_citas from "../../assets/img/icono_miscitas.png";
+import icono_citas2 from "../../assets/img/icono_Cita2.png";
 import icono_nuevoArtista from "../../assets/img/icono_nuevoArtista.png";
 import icono_usuarios from "../../assets/img/icono_usuarios.png";
 import icono_borrar from "../../assets/img/icono_borrar.png";
@@ -31,8 +30,7 @@ import Table from "react-bootstrap/Table";
 import artist_1 from "../../assets/img/artista_1.jpg";
 import edit_button from "../../assets/img/edit_button.png";
 
-import { button } from "@nextui-org/react";
-import Accordion from "react-bootstrap/Accordion";
+
 
 export const Artist_profile = () => {
   const navigate = useNavigate();
@@ -82,17 +80,8 @@ export const Artist_profile = () => {
   const myId = userRdxData.credentials.userData?.tattoo_artist_id;
   const role = userRdxData.credentials.userData?.role;
 
-  console.log(profileData);
-  console.log(appointmentsData);
-  console.log(token);
-  console.log(role);
-
-  console.log(token);
-
   const appointmentPending = appointmentsData.length;
-  console.log(appointmentPending);
 
-  //console.log(artistAppointmentsData[0].user.first_name)
   useEffect(() => {
     if (!token) {
       navigate("/register");
@@ -116,23 +105,19 @@ export const Artist_profile = () => {
       ...prevState,
       [event.target.name]: event.target.value,
     }));
-    console.log(profileDataUpdate);
   };
   const inputHandlerNewArtits = (event) => {
     setNewArtistData((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
-    console.log(newArtistData);
   };
 
   const buttonHandler = () => {
     setIsEditing(!isEditing);
-    console.log(isEditing);
   };
 
   const updateArtist = () => {
-    console.log(profileDataUpdate.first_name);
     if (profileDataUpdate.first_name == "") {
       profileDataUpdate.first_name = profileData.first_name;
     }
@@ -148,7 +133,6 @@ export const Artist_profile = () => {
 
     updateArtistById(token, myId, profileDataUpdate);
     setIsEditing(false);
-    //window.location.replace("");
   };
 
   const createArtist = () => {
@@ -159,8 +143,6 @@ export const Artist_profile = () => {
   const allUsers = () => {
     getAllUsers(pageUser, skipUser).then((res) => {
       setUsers(res.results);
-
-      console.log(users);
     });
   };
 
@@ -173,8 +155,6 @@ export const Artist_profile = () => {
       setPageUser(res.page);
       setskipUser(res.skip);
       setcountUser(res.count);
-
-      console.log(users);
     });
   };
   const lastUser = () => {
@@ -186,8 +166,6 @@ export const Artist_profile = () => {
       setPageUser(res.page);
       setskipUser(res.skip);
       setcountUser(res.count);
-
-      console.log(users);
     });
   };
   const isAppointmnetStatus = () => {
@@ -202,20 +180,13 @@ export const Artist_profile = () => {
   };
 
   const deleteUser = (id) => {
-console.log(id + ' deleted');
-    deleteUserById(id,token);
+    deleteUserById(id, token);
     setIsUsers(false);
-  }
+  };
 
   return (
     <div className="profile_container">
-      <div className="alert_container">
-        {/* <Alert variant="warning" onClose={() => setShow(false)} dismissible>
-          <Alert.Heading>
-            Tienes {appointmentPending} citas nuevas
-          </Alert.Heading>
-        </Alert> */}
-      </div>
+      <div className="alert_container"></div>
       <Card>
         <ListGroup variant="flush">
           <ListGroup.Item className="head_container_list" variant="secondary">
@@ -285,7 +256,6 @@ console.log(id + ' deleted');
               statusFocus={true}
               name="last_name"
               type="text"
-              // handler={inputHandler}
             ></CustomInput>
           </ListGroup.Item>
           {isEditing ? (
@@ -338,11 +308,9 @@ console.log(id + ' deleted');
             />
           </div>
           <div className="icon">
-            <img src={icono_equipo} alt="" />
+            <img src={icono_citas2} alt="" />
           </div>
-          <div className="icon">
-            <img src={icono_contacto} alt="" />
-          </div>
+        
         </div>
       ) : null}
       <br />
@@ -453,46 +421,50 @@ console.log(id + ' deleted');
       <div className="users_container">
         {isUsers ? (
           <>
-          <Table  responsive="sm" striped bordered hover variant="light">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Fech.Nac.</th>
-                
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((id, index) => (
-                <tr key={index}>
-                  <td>{users[index].id}</td>
-                  <td>{users[index].first_name}</td>
-                  <td>{users[index].last_name}</td>
-                  <td >{users[index].email}</td>
-                  <td>{users[index].phone}</td>
-                  <td>{moment(users[index].birthday).format("DD/MM/YYYY")}</td>
-                  <td><img className="icono_borrar" src={icono_borrar} alt="" onClick={()=>deleteUser(users[index].id)} /></td>
-                 
+            <Table responsive="sm" striped bordered hover variant="light">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Email</th>
+                  <th>Teléfono</th>
+                  <th>Fech.Nac.</th>
                 </tr>
-              ))}
-              
-            </tbody>
-            
-          </Table>
-          
-          <div className="pagination_container">
-          <Pagination>
-            {/* <Pagination.First /> */}
-            <Pagination.Prev onClick={() => lastUser()} />
-            <Pagination.Item>{1}</Pagination.Item>
-            <Pagination.Next onClick={() => nextUser()} />
-            {/* <Pagination.Last /> */}
-          </Pagination>
-          </div>
-          </>) : null}
+              </thead>
+              <tbody>
+                {users.map((id, index) => (
+                  <tr key={index}>
+                    <td>{users[index].id}</td>
+                    <td>{users[index].first_name}</td>
+                    <td>{users[index].last_name}</td>
+                    <td>{users[index].email}</td>
+                    <td>{users[index].phone}</td>
+                    <td>
+                      {moment(users[index].birthday).format("DD/MM/YYYY")}
+                    </td>
+                    <td>
+                      <img
+                        className="icono_borrar"
+                        src={icono_borrar}
+                        alt=""
+                        onClick={() => deleteUser(users[index].id)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+
+            <div className="pagination_container">
+              <Pagination>
+                <Pagination.Prev onClick={() => lastUser()} />
+                <Pagination.Item>{1}</Pagination.Item>
+                <Pagination.Next onClick={() => nextUser()} />
+              </Pagination>
+            </div>
+          </>
+        ) : null}
       </div>
     </div>
   );

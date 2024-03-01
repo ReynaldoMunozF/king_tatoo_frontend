@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, userData } from "../userSlice";
 import { Alert } from "react-bootstrap";
+import Button from 'react-bootstrap/Button';
 
 export const Login_artist = () => {
   const [credentials, setCredentials] = useState({
@@ -17,12 +18,8 @@ export const Login_artist = () => {
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
 
-  // instancio redux en modo escritura
   const dispatch = useDispatch();
-
-  // instancio redux en modo lectura
   const userRdxData = useSelector(userData);
-
   const navigate = useNavigate();
 
   const inputHandler = (event) => {
@@ -36,7 +33,6 @@ export const Login_artist = () => {
     if (credentials.email == "" || credentials.password == "") {
       return setShow(true);
     }
-    //console.log(credentials);
     artistLogin(credentials)
       .then((token) => {
         if (!token) {
@@ -62,6 +58,7 @@ export const Login_artist = () => {
     
      
       <div className="login">
+        <div className="login_div">
         <CustomInput
           autoFocus 
           placeholder={"Ingresa tu email"}
@@ -101,8 +98,9 @@ export const Login_artist = () => {
           <div />
         )}
         <h1>{credentials.name}</h1>
-        <div className="apiCallButton" onClick={buttonHandler}>
-          LOGIN
+        <Button variant="warning" onClick={buttonHandler}>Inicio Sesión</Button>
+        <br />
+        <p>Acceso solo personal autorizado</p>
         </div>
       </div>
     

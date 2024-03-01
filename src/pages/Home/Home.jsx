@@ -1,6 +1,4 @@
 import logo_home from "../../assets/img/logo_principal.png";
-import { AppointmentCard } from "../../components/appointmentFormat/AppointmentFormat";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import { useEffect, useState } from "react";
 import promo_1 from "../../assets/img/promo_1.jpg";
@@ -53,17 +51,15 @@ export const Home = () => {
     }));
   };
   const navigate = useNavigate();
-  // instancio redux en modo escritura
+
   const dispatch = useDispatch();
 
-  // instancio redux en modo lectura
   const userRdxData = useSelector(userData);
 
   const buttonHandler = () => {
     if (credentials.email == "" || credentials.password == "") {
-      //return setShow(true);
     }
-    //console.log(credentials);
+
     userLogin(credentials)
       .then((token) => {
         if (!token) {
@@ -81,10 +77,7 @@ export const Home = () => {
           navigate("/profile");
         });
       })
-      .catch(
-        (err) => console.error("Ha ocurrido un error", err)
-        // setShow(false), setShow2(true)
-      );
+      .catch((err) => console.error("Ha ocurrido un error", err));
   };
   const buttonHandlerRegister = () => {
     if (!objectValidator(userDataRegister)) {
@@ -93,8 +86,6 @@ export const Home = () => {
     if (!emailValidator(userDataRegister.email)) {
       return setIsAlertMail(true);
     }
-
-    console.log(userDataRegister);
 
     userRegister(userDataRegister)
       .then(() => {
@@ -118,10 +109,7 @@ export const Home = () => {
           });
         });
       })
-      .catch(
-        (err) => console.error("Ha ocurrido un error", err)
-        //   setShow(false), setShow2(true)
-      );
+      .catch((err) => console.error("Ha ocurrido un error", err));
   };
 
   return (
@@ -141,7 +129,6 @@ export const Home = () => {
           </Carousel>
         </div>
         <div className="register_conatiner">
-         
           <div className="btn_container">
             <Button
               variant="dark"

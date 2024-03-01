@@ -12,10 +12,9 @@ import {
   updateScheduleById,
 } from "../../services/apiCalls";
 import { ArtistCard } from "../../components/ArtistCard/ArtistCard";
-import { CustomInput } from "../../components/CustomInput/CustomInput";
-import Button from "react-bootstrap/Button";
+
 import { BtnAppointments } from "../../components/ButtonAppointment/ButtonAppointment";
-import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import moment from "moment";
 import "moment/locale/pt-br";
@@ -48,28 +47,31 @@ export const Appointments = () => {
   const [show, setShow] = useState(true);
   const [show2, setShow2] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const[photo, setPhoto] = useState()
+  const [photo, setPhoto] = useState();
 
   const userRdxData = useSelector(userData);
 
   const token = userRdxData.credentials.token;
   const myId = userRdxData.credentials.userData?.user_id;
 
+  const artist_photo = [
+    artist_1,
+    artist_2,
+    artist_3,
+    artist_4,
+    artist_5,
+    artist_6,
+  ];
 
-  const artist_photo = [artist_1, artist_2, artist_3, artist_4, artist_5, artist_6]
-
- 
   useEffect(() => {
     if (!token) {
       navigate("/register");
     } else {
       setTimeout(() => {
         getUserById(token, myId).then((res) => {
-          console.log(res, "soy la respuesta del server");
           setProfileData(res);
         });
         getAllArtist().then((res) => {
-          console.log(res, "soy la respuesta de los artist");
           setArtistData(res);
         });
       }, 100);
@@ -77,21 +79,17 @@ export const Appointments = () => {
   }, []);
 
   const artistSelect = (artistSelectId, artistSelectNickname, artistPhoto) => {
-    console.log(artistSelectId + artistSelectNickname);
     setArtistSelectId(artistSelectId);
     setArtistSelectNickname(artistSelectNickname);
     setPhoto(artistPhoto);
     getScheduleByIdArtist(artistSelectId).then((res) => {
-      console.log(res, "soy la respuesta de las citas de artist");
       setArtistSchedule(res);
     });
     setShow(false);
     setShow2(true);
   };
-  console.log(artistSchedules);
 
   const selectSchedulesDate = () => {
-    console.log("entro aqui");
     const dateSchedule2 = [];
 
     for (let index = 0; index < artistSchedules.length; index++) {
@@ -108,16 +106,12 @@ export const Appointments = () => {
           active: artistSchedules[index].active,
         };
         dateSchedule2.push(dateSchedule);
-        console.log(dateSchedule);
       }
     }
     return dateSchedule2;
   };
 
   const datefinal = selectSchedulesDate();
-
-  console.log(datefinal);
-  console.log(startDate);
 
   const createDataAppointment = (hourArtist, selectScheduleId) => {
     setShowModal(true);
@@ -132,14 +126,10 @@ export const Appointments = () => {
       schedules_id: selectScheduleId,
     }));
   };
-  console.log(scheduleId + "soy el schedule");
-  console.log(appointmentData);
 
   const closeModal = () => {
     setShowModal(false);
   };
-
-  console.log(appointmentData);
 
   const createAppointment = () => {
     createAppointmentById(token, appointmentData);
@@ -153,39 +143,36 @@ export const Appointments = () => {
   };
   return (
     <div className="container_major">
-     
       <div className="titulo">
-      {show ? (
+        {show ? (
           <>
             <h1>
-          <strong>ARTISTAS</strong>
-        </h1>
-        <p>
-          Nuestro equipo está compuesto por varios artistas especializados cada
-          uno en diversos estilos, entre ellos podemos destacar el Realismo,
-          Anime, Japonés y Blackwork.
-        </p>
+              <strong>ARTISTAS</strong>
+            </h1>
+            <p>
+              Nuestro equipo está compuesto por varios artistas especializados
+              cada uno en diversos estilos, entre ellos podemos destacar el
+              Realismo, Anime, Japonés y Blackwork.
+            </p>
           </>
         ) : (
           <div />
         )}
-       
       </div>
       <div className="artists_container">
-        {show  ? (
-        
+        {show ? (
           artistData.map((id, index) => (
-
-           
-            
             <ArtistCard
-            photo={artist_photo[index]}
-            
+              photo={artist_photo[index]}
               key={index}
               artist={artistData[index].nickname}
               description={artistData[index].description}
               selectArtist={() =>
-                artistSelect(artistData[index].id, artistData[index].nickname, artist_photo[index])
+                artistSelect(
+                  artistData[index].id,
+                  artistData[index].nickname,
+                  artist_photo[index]
+                )
               }
               nombre={"Seleccionar"}
               BtnColor={"outline-dark"}
@@ -201,25 +188,24 @@ export const Appointments = () => {
         {show2 ? (
           <>
             <h3>Selecciona la Fecha:</h3>
-            
+
             <DatePicker
               locale="es"
               let
               selected={startDate}
               dateFormat={"dd/MM/YYYY"}
               minDate={startDate}
-              filterDate={date => date.getDay()!=0 && date.getDay()!=6 }
+              filterDate={(date) => date.getDay() != 0 && date.getDay() != 6}
               showIcon
-             
               onChange={(date) => setStartDate(date)}
             ></DatePicker>
-            
+
             <ArtistCard
-            photo={photo}
+              photo={photo}
               artist={artistSelectNickname}
               nombre={"Cambiar"}
               BtnColor={"outline-dark"}
-              selectArtist={()=>window.location.replace("")}
+              selectArtist={() => window.location.replace("")}
             />
 
             <div className="datePicke_container"></div>
