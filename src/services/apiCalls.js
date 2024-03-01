@@ -87,6 +87,21 @@ export const getAppointmentById = async (token, id) => {
     throw error;
   }
 };
+export const getAllComplete = async (token ) => {
+  
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const res = await axios.get(`${API_URL}appointments/all`, config);
+    return res.data;
+  } catch (error) {
+    console.error("Error en appointments:", error);
+    throw error;
+  }
+};
 
 export const updateAppointmentById = async (token, id) => {
   try {
@@ -191,16 +206,19 @@ export const getArtistById = async (token, id) => {
 };
 
 export const getAppointmentByArtistId = async (token, id) => {
+  console.log(token);
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
       },
     };
+    console.log(id);
+
     const res = await axios.get(`${API_URL}artist/${id}/appointments`, config);
-    return res.data;
+    return res.data.results;
   } catch (error) {
-    console.error("Error en el login:", error);
+    console.error("Error en appointment:", error);
     throw error;
   }
 };

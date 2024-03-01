@@ -10,6 +10,9 @@ import {
   artistRegister,
   getAllUsers,
   deleteUserById,
+  getAllComplete,
+  deleteAppointmentById,
+  updateScheduleById,
 } from "../../services/apiCalls";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -30,8 +33,6 @@ import Table from "react-bootstrap/Table";
 import artist_1 from "../../assets/img/artista_1.jpg";
 import edit_button from "../../assets/img/edit_button.png";
 
-
-
 export const Artist_profile = () => {
   const navigate = useNavigate();
 
@@ -51,9 +52,11 @@ export const Artist_profile = () => {
     description: "",
   });
   const [appointmentsData, setAppointmentData] = useState([]);
+  const [appointmentsAllData, setAppointmentsAllData] = useState([]);
   const userRdxData = useSelector(userData);
   const [isEditing, setIsEditing] = useState(false);
   const [isAppointment, setisAppointment] = useState(false);
+  const [isAllAppointment, setIsAllAppointment] = useState(false);
   const [isNotification, setIsNotification] = useState(true);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const [isNewArtist, setIsNewArtist] = useState(false);
@@ -74,13 +77,13 @@ export const Artist_profile = () => {
   //   return 0;
   // });
 
-  const [show, setShow] = useState(true);
-
   const token = userRdxData.credentials.token;
   const myId = userRdxData.credentials.userData?.tattoo_artist_id;
   const role = userRdxData.credentials.userData?.role;
 
   const appointmentPending = appointmentsData.length;
+
+  console.log(appointmentsData);
 
   useEffect(() => {
     if (!token) {
@@ -99,6 +102,8 @@ export const Artist_profile = () => {
       setIsSuperAdmin(true);
     }
   }, []);
+
+  console.log(appointmentsData);
 
   const inputHandler = (event) => {
     setProfileDataUpdate((prevState) => ({
@@ -171,6 +176,9 @@ export const Artist_profile = () => {
   const isAppointmnetStatus = () => {
     isAppointment ? setisAppointment(false) : setisAppointment(true);
   };
+  const isAllAppointmnetStatus = () => {
+    isAllAppointment ? setIsAllAppointment(false) : setIsAllAppointment(true);
+  };
 
   const setIsUsersStatus = () => {
     isUsers ? setIsUsers(false) : setIsUsers(true);
@@ -183,6 +191,24 @@ export const Artist_profile = () => {
     deleteUserById(id, token);
     setIsUsers(false);
   };
+
+  const deleteApointment = (id, schedulesId) => {
+    deleteAppointmentById(token, id);
+
+    const updateActive = {
+      active: 1,
+    };
+
+    updateScheduleById(schedulesId, updateActive);
+    setIsAllAppointment(false);
+  };
+
+  const getAppointment = () => {
+    getAllComplete(token).then((res) => {
+      setAppointmentsAllData(res.results);
+    });
+  };
+  console.log(appointmentsAllData);
 
   return (
     <div className="profile_container">
@@ -308,9 +334,12 @@ export const Artist_profile = () => {
             />
           </div>
           <div className="icon">
-            <img src={icono_citas2} alt="" />
+            <img
+              src={icono_citas2}
+              onClick={() => (getAppointment(), isAllAppointmnetStatus())}
+              alt=""
+            />
           </div>
-        
         </div>
       ) : null}
       <br />
@@ -464,6 +493,62 @@ export const Artist_profile = () => {
                 <Pagination.Next onClick={() => nextUser()} />
               </Pagination>
             </div>
+          </>
+        ) : null}
+      </div>
+      <div className="appointments_container">
+        {isAllAppointment ? (
+          <>
+            <Table responsive="sm" striped bordered hover variant="light">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Artista</th>
+                  <th>Borrar</th>
+                </tr>
+              </thead>
+              <tbody>
+                {appointmentsAllData.map((id, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{appointmentsAllData[index].user.first_name}</td>
+                    <td>{appointmentsAllData[index].user.last_name}</td>
+                    <td>
+                      {moment(appointmentsAllData[index].date).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </td>
+                    <td>{appointmentsAllData[index].hour}</td>
+                    <td>{appointmentsAllData[index].tattoo_artist.nickname}</td>
+                    <td>
+                      <img
+                        className="icono_borrar"
+                        src={icono_borrar}
+                        alt=""
+                        onClick={() =>
+                          deleteApointment(
+                            appointmentsAllData[index].id,
+                            appointmentsAllData[index].schedules_id
+                          )
+                        }
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+
+            {/* <div className="pagination_container">
+              <Pagination>
+                <Pagination.Prev onClick={() => lastUser()} />
+                <Pagination.Item>{1}</Pagination.Item>
+                <Pagination.Next onClick={() => nextUser()} />
+              </Pagination>
+            </div> */}
           </>
         ) : null}
       </div>

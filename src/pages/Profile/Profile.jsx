@@ -5,7 +5,6 @@ import {
   getUserById,
   getAppointmentById,
   getAllArtist,
-  // updateAppointmentById,
   updateUserById,
   deleteAppointmentById,
   updateScheduleById,
@@ -52,13 +51,10 @@ export const Profile = () => {
   const userRdxData = useSelector(userData);
   const [startDate, setStartDate] = useState(new Date());
   const [isAppointment, setisAppointment] = useState(false);
+  const [show, setShow] = useState(false);
 
   const token = userRdxData.credentials.token;
   const myId = userRdxData.credentials.userData?.user_id;
-
-  //console.log(artistData);
-  //console.log(appointmentData[0].tattoo_artist_id);
-  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (!token) {
@@ -66,11 +62,9 @@ export const Profile = () => {
     } else {
       setTimeout(() => {
         getUserById(token, myId).then((res) => {
-          console.log(res, "soy la respuesta del server");
           setProfileData(res);
         });
         getAllArtist().then((res) => {
-          console.log(res, "soy la respuesta de los artist");
           setArtistData(res);
         });
       }, 100);
@@ -82,18 +76,16 @@ export const Profile = () => {
       ...prevState,
       [event.target.name]: event.target.value,
     }));
-    console.log(profileDataUpdate);
   };
 
   useEffect(() => {}, [profileDataUpdate]);
 
   const buttonHandler = () => {
     setIsEditing(!isEditing);
-    console.log(isEditing);
+    
   };
   const userAppointment = () => {
     getAppointmentById(token, myId).then((res) => {
-      console.log(res, "soy la respuesta de appointments");
       setAppointmentData(res);
     });
   };
@@ -103,7 +95,6 @@ export const Profile = () => {
   };
 
   const deleteAppointment = (id, schedulesId) => {
-    console.log(id);
     deleteAppointmentById(token, id);
     const updateActive = {
       active: 1,
@@ -114,7 +105,6 @@ export const Profile = () => {
   };
 
   const updateUser = () => {
-    console.log(profileDataUpdate.first_name);
     if (profileDataUpdate.first_name == "") {
       profileDataUpdate.first_name = profileData.first_name;
     }
@@ -130,7 +120,7 @@ export const Profile = () => {
 
     updateUserById(token, myId, profileDataUpdate);
     setIsEditing(false);
-    //window.location.replace("");
+   
   };
 
   return (
@@ -263,7 +253,7 @@ export const Profile = () => {
                 {appointmentData.map((id, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{artistData[index+1]?.nickname}</td>
+                    <td>{artistData[index + 1]?.nickname}</td>
                     <td>
                       {moment(appointmentData[index].appointment_date).format(
                         "DD/MM/YYYY"
