@@ -5,7 +5,7 @@ const API_URL = "http://localhost:3000/api/";
 
 
 export const userLogin = async (credentials) => {
-  console.log(credentials );
+ 
   try {
 
     const res = await axios.post(`${API_URL}authUser/login`, credentials, {});
@@ -43,16 +43,12 @@ export const userRegister = async (userData) => {
   }
 };
 export const updateUserById = async (token, id, userData) => {
-  console.log(token + "soy el token en update");
-  console.log(userData);
-
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
       },
     };
-    console.log(config);
     const res = await axios.patch(`${API_URL}users/${id}`, userData, config);
     return res;
   } catch (error) {
@@ -62,14 +58,13 @@ export const updateUserById = async (token, id, userData) => {
 };
 export const deleteUserById = async (id,token) => {
   
-console.log(id + "soy el id en delete");
+
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
       },
     };
-    console.log(config);
     const res = await axios.delete(`${API_URL}users/${id}`,config);
     return res;
   } catch (error) {
@@ -131,8 +126,6 @@ export const createAppointmentById = async (token, appointmentData) => {
     //     Authorization: "Bearer " + token,
     //   },
     // };
-    console.log("entro aqui en crear cita");
-    console.log(appointmentData);
 
     const res = await axios.post(`${API_URL}appointments`, appointmentData);
     return res;
@@ -159,9 +152,6 @@ export const updateScheduleById = async (id, updateActive) => {
     //     Authorization: "Bearer " + token,
     //   },
     // };
-    console.log(updateActive);
-    console.log(id);
-
     const res = await axios.patch(`${API_URL}schedules/${id}`, updateActive);
     return res;
   } catch (error) {
@@ -185,8 +175,7 @@ export const artistLogin = async (credentials) => {
   }
 };
 export const getArtistById = async (token, id) => {
-  console.log(token);
-  console.log(id);
+
   try {
     const config = {
       headers: {
@@ -217,7 +206,7 @@ export const getAppointmentByArtistId = async (token, id) => {
 };
 
 export const updateArtistById = async (token, id, artistData) => {
-  console.log(artistData);
+ 
 
   try {
     const config = {
@@ -225,7 +214,7 @@ export const updateArtistById = async (token, id, artistData) => {
         Authorization: "Bearer " + token,
       },
     };
-    console.log(config);
+   
     const res = await axios.patch(`${API_URL}artist/${id}`, artistData, config);
     return res;
   } catch (error) {
@@ -235,7 +224,7 @@ export const updateArtistById = async (token, id, artistData) => {
 };
 
 export const artistRegister = async (token, artistData) => {
-  console.log(artistData);
+  
   try {
     const config = {
       headers: {

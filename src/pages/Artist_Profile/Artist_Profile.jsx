@@ -430,6 +430,7 @@ export const Artist_profile = () => {
                   <th>Email</th>
                   <th>Teléfono</th>
                   <th>Fech.Nac.</th>
+                  <th>Borrar</th>
                 </tr>
               </thead>
               <tbody>
