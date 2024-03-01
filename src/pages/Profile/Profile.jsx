@@ -14,8 +14,6 @@ import { useSelector } from "react-redux";
 import { userData } from "../userSlice";
 import Button from "react-bootstrap/Button";
 import Carousel from "react-bootstrap/Carousel";
-
-import { AppointmentCard } from "../../components/appointmentFormat/AppointmentFormat";
 import moment from "moment";
 import "moment/locale/pt-br";
 import { Alert } from "react-bootstrap";
@@ -23,7 +21,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Tables } from "../../components/Tables/Tables";
 import Table from "react-bootstrap/Table";
 import edit_button from "../../assets/img/edit_button.png";
 import promo_1 from "../../assets/img/promo_1.jpg";
@@ -82,7 +79,6 @@ export const Profile = () => {
 
   const buttonHandler = () => {
     setIsEditing(!isEditing);
-    
   };
   const userAppointment = () => {
     getAppointmentById(token, myId).then((res) => {
@@ -120,7 +116,6 @@ export const Profile = () => {
 
     updateUserById(token, myId, profileDataUpdate);
     setIsEditing(false);
-   
   };
 
   return (
@@ -230,7 +225,11 @@ export const Profile = () => {
             />
           </div>
           <div className="icon">
-            <img src={icono_equipo} alt="" />
+            <img
+              src={icono_equipo}
+              onClick={() => navigate("/appointments")}
+              alt=""
+            />
           </div>
           <div className="icon">
             <img src={icono_contacto} alt="" />

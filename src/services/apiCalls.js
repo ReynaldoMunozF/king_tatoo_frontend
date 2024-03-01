@@ -206,14 +206,14 @@ export const getArtistById = async (token, id) => {
 };
 
 export const getAppointmentByArtistId = async (token, id) => {
-  console.log(token);
+ 
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
       },
     };
-    console.log(id);
+    
 
     const res = await axios.get(`${API_URL}artist/${id}/appointments`, config);
     return res.data.results;

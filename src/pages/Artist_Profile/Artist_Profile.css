@@ -100,9 +100,9 @@
 
   @media (max-width: 600px) {
     .users_container {
-      width: 25em;
+      width: 20em;
 
-      font-size: 0.6em;
+      font-size: 0.55em;
     }
   }
 

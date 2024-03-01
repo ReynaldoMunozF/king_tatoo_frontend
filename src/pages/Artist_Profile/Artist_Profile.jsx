@@ -83,7 +83,7 @@ export const Artist_profile = () => {
 
   const appointmentPending = appointmentsData.length;
 
-  console.log(appointmentsData);
+ 
 
   useEffect(() => {
     if (!token) {
@@ -103,7 +103,7 @@ export const Artist_profile = () => {
     }
   }, []);
 
-  console.log(appointmentsData);
+ 
 
   const inputHandler = (event) => {
     setProfileDataUpdate((prevState) => ({
@@ -208,7 +208,7 @@ export const Artist_profile = () => {
       setAppointmentsAllData(res.results);
     });
   };
-  console.log(appointmentsAllData);
+  
 
   return (
     <div className="profile_container">
